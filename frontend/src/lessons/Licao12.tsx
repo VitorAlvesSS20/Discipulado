@@ -63,7 +63,7 @@ export default function Licao12({ onVoltar }: LicaoProps) {
           <div className="nota-teologica">
             <h3>Como Deve Ser a Nossa Adoração?</h3>
             <ol>
-              <li><strong>Espontânea:</strong> Fluindo do Espírito, não por força ou violência humana (Zacarias 4:6b).</li>
+              <li><strong>Espontânea:</strong> Fluindo do Espírito, não por força ou violência humana (Zacarias 4:6).</li>
               <li><strong>Consciente:</strong> Fruto de um entendimento real, o chamado "culto racional" (Romanos 12:1).</li>
               <li><strong>Em Espírito e em Verdade:</strong> Sintonizada com o Espírito Santo e fundamentada na sinceridade da Palavra (João 4:23-24).</li>
               <li><strong>Com Maturidade:</strong> Deixando de lado atitudes infantis para focar no crescimento espiritual (1 Coríntios 13:11).</li>

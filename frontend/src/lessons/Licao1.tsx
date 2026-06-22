@@ -138,7 +138,7 @@ export default function Licao1({ onVoltar }: LicaoProps) {
             </div>
             <div className="pilar-card">
               <h4>Ela é Única</h4>
-              <p>Não existem duas Bíblias espiritualmente falando; a revelação da salvação é perfeitamente uma só.</p>
+              <p>Não existem duas Bíblias espiritualmente falando; a revelação que salva é perfeitamente uma só.</p>
             </div>
           </div>
 

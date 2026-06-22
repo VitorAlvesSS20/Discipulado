@@ -172,6 +172,8 @@ export default function App() {
                 Antes de iniciar suas lições, <strong>pegue um caderno</strong> para fazer suas anotações pessoais e 
                 <strong> tenha sua Bíblia em mãos</strong> para conferir detalhadamente a veracidade de todas as informações, 
                 referências e versículos citados ao longo do material.
+
+                Ao final de cada lição há um simples questionário para que possa refletir com perguntas, Recomendamos que as responda em seu caderno. 
               </p>
             </section>
 
