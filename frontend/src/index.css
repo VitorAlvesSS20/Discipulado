@@ -1,0 +1,27 @@
+:root {
+  /* Paleta Cafeteria Cozy & Alto Contraste */
+  --bg-primary: #FAF6F0;       /* Creme suave / Espuma do leite */
+  --bg-card: #FFFFFF;          /* Branco puro para contraste nos cards */
+  --text-main: #2C1B14;        /* Grão de Café Escuro / Café Expresso */
+  --text-muted: #7A6356;      /* Café com leite / Marrom médio */
+  --primary: #4A2C1B;          /* Café Torrado Forte */
+  --primary-light: #8C6246;    /* Caramelo / Canela */
+  --accent: #B45309;           /* Calda de Açúcar Queimado */
+  --border-color: #2C1B14;     /* Alto Contraste: Bordas escuras e marcantes */
+  --font-serif: 'Georgia', Garamond, serif;
+  --font-sans: 'Segoe UI', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

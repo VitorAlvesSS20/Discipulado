@@ -1,0 +1,352 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: radial-gradient(var(--text-muted) 0.5px, transparent 0.5px), radial-gradient(var(--text-muted) 0.5px, var(--bg-primary) 0.5px);
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+.main-header {
+  background-color: var(--primary);
+  color: var(--bg-primary);
+  padding: 60px 20px;
+  text-align: center;
+  border-bottom: 5px solid var(--border-color);
+  position: relative;
+}
+
+.main-header::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  right: 0;
+  border-bottom: 1px solid var(--bg-primary);
+}
+
+.brand-logo {
+  font-family: var(--font-serif);
+  font-size: 3rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.header-subtitle {
+  font-family: var(--font-sans);
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--primary-light);
+  font-weight: 600;
+}
+
+.main-content {
+  flex: 1;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 50px 20px;
+  box-sizing: border-box;
+}
+
+.instrucoes-box {
+  background-color: #fff9e6;
+  border: 3px solid var(--border-color);
+  padding: 25px;
+  border-radius: 4px;
+  margin-bottom: 30px;
+  box-shadow: 6px 6px 0px 0px var(--border-color);
+  box-sizing: border-box;
+}
+
+.instrucoes-box h4 {
+  font-family: var(--font-serif);
+  color: #b37400;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.instrucoes-box p {
+  line-height: 1.6;
+  font-size: 1.05rem;
+  color: var(--text-main);
+}
+
+.intro-section {
+  background: var(--bg-card);
+  border: 3px solid var(--border-color);
+  padding: 40px;
+  border-radius: 4px;
+  margin-bottom: 50px;
+  box-shadow: 8px 8px 0px 0px var(--border-color);
+  box-sizing: border-box;
+}
+
+.intro-section h2 {
+  font-family: var(--font-serif);
+  color: var(--primary);
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.greeting {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: bold;
+  color: var(--primary-light);
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.intro-section p {
+  margin-bottom: 20px;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
+
+.quote-box {
+  background-color: var(--bg-primary);
+  border: 2px dashed var(--border-color);
+  padding: 25px;
+  border-radius: 4px;
+  margin-top: 30px;
+  box-sizing: border-box;
+}
+
+.quote-box p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--text-main);
+  font-size: 1.15rem;
+  margin-bottom: 12px;
+}
+
+.quote-box span {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 0.85rem;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 35px;
+}
+
+.modulo-card {
+  background: var(--bg-card);
+  border: 3px solid var(--border-color);
+  border-radius: 4px;
+  padding: 30px;
+  box-shadow: 6px 6px 0px 0px var(--border-color);
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.modulo-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px 0px var(--border-color);
+}
+
+.modulo-category {
+  font-family: var(--font-serif);
+  color: var(--primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  border-bottom: 3px double var(--border-color);
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+.licoes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.licao-item-link {
+  padding: 14px 10px;
+  border-bottom: 1px dashed #E2DCD5;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.05rem;
+  flex-wrap: wrap;
+}
+
+.licao-item-link:last-child {
+  border-bottom: none;
+}
+
+.licao-item-link:hover {
+  background-color: var(--bg-primary);
+  color: var(--accent);
+  padding-left: 15px;
+}
+
+.licao-number {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  color: var(--primary-light);
+  min-width: 75px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.back-btn {
+  background: var(--primary);
+  color: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  padding: 12px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 30px;
+  box-shadow: 4px 4px 0px 0px var(--border-color);
+  transition: all 0.1s ease;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.back-btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px 0px var(--border-color);
+}
+
+.lesson-placeholder {
+  background: var(--bg-card);
+  padding: 50px;
+  border-radius: 4px;
+  border: 3px solid var(--border-color);
+  box-shadow: 8px 8px 0px 0px var(--border-color);
+  box-sizing: border-box;
+}
+
+.lesson-placeholder h2 {
+  font-family: var(--font-serif);
+  color: var(--primary);
+  margin-bottom: 20px;
+}
+
+.bibliografia-box {
+  background: var(--bg-card);
+  border: 3px solid var(--border-color);
+  padding: 30px;
+  border-radius: 4px;
+  margin-top: 50px;
+  box-shadow: 6px 6px 0px 0px var(--border-color);
+  box-sizing: border-box;
+}
+
+.bibliografia-box h4 {
+  font-family: var(--font-serif);
+  color: var(--primary);
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
+
+.bibliografia-box ul {
+  list-style-type: square;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.bibliografia-box li {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.main-footer {
+  background: var(--primary);
+  color: var(--bg-primary);
+  text-align: center;
+  padding: 30px 20px;
+  font-size: 0.95rem;
+  border-top: 5px solid var(--border-color);
+  font-family: var(--font-sans);
+  letter-spacing: 1px;
+}
+
+@media (max-width: 768px) {
+  .main-header {
+    padding: 40px 15px;
+  }
+
+  .brand-logo {
+    font-size: 2.2rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.95rem;
+    letter-spacing: 1.5px;
+  }
+
+  .main-content {
+    padding: 30px 15px;
+  }
+
+  .intro-section {
+    padding: 25px 20px;
+    margin-bottom: 35px;
+  }
+
+  .intro-section h2, .section-title {
+    font-size: 1.6rem;
+  }
+
+  .lesson-placeholder {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-logo {
+    font-size: 1.8rem;
+  }
+
+  .modules-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .modulo-card {
+    padding: 20px 15px;
+  }
+
+  .licao-item-link {
+    padding: 12px 5px;
+  }
+
+  .back-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
