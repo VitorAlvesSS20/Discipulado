@@ -471,6 +471,13 @@ body {
   background-color: var(--bg-primary);
 }
 
+.btn-group-questionario {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
 .btn-gabarito {
   background-color: var(--accent);
   color: white;
@@ -485,6 +492,10 @@ body {
   margin-top: 15px;
   max-width: 100%;
   box-sizing: border-box;
+}
+
+.btn-gabarito-flex {
+  flex: 1;
 }
 
 .btn-gabarito:hover {

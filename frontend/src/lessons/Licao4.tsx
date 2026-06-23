@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 import './Licao1.css';
 
 interface LicaoProps {
@@ -10,9 +12,89 @@ export default function Licao4({ onVoltar }: LicaoProps) {
     q1: '', q2: '', q3: '', q4: '', q5: ''
   });
   const [mostrarGabarito, setMostrarGabarito] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+  const [toast, setToast] = useState<{ mensagem: string; tipo: 'success' | 'error' } | null>(null);
+
+  useEffect(() => {
+    const carregarRespostas = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const docRef = doc(db, 'users_progress', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          // ALTERADO: Mudado de 'licao-4' para 'o-espirito-santo'
+          if (data.respostasQuestionarios && data.respostasQuestionarios['o-espirito-santo']) {
+            const salvas = data.respostasQuestionarios['o-espirito-santo'];
+            setRespostas({
+              q1: salvas['1) Cite três evidências bíblicas ou características que provam que o Espírito Santo é uma Pessoa e não uma força da natureza:'] || '',
+              q2: salvas['2) Qual é a missão prioritária do Espírito Santo atualmente na terra em relação ao mundo?'] || '',
+              q3: salvas['3) Quais são os 7 símbolos bíblicos atribuídos ao Espírito Santo mencionado nesta lição?'] || '',
+              q4: salvas['4) Qual é a diferença prática entre a experiência do "Batismo com o Espírito Santo" e a "Plenitude do Espírito Santo"?'] || '',
+              q5: salvas['5) O que se entende por "blasfêmia contra o Espírito Santo" segundo o contexto bíblico apresentado?'] || ''
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao carregar respostas:', error);
+      }
+    };
+
+    carregarRespostas();
+  }, []);
+
+  const exibirToast = (mensagem: string, tipo: 'success' | 'error') => {
+    setToast({ mensagem, tipo });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleSalvarRespostas = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      exibirToast('Você precisa estar autenticado para salvar suas respostas.', 'error');
+      return;
+    }
+
+    setSalvando(true);
+
+    const payloadRespostas = {
+      '1) Cite três evidências bíblicas ou características que provam que o Espírito Santo é uma Pessoa e não uma força da natureza:': respostas.q1,
+      '2) Qual é a missão prioritária do Espírito Santo atualmente na terra em relação ao mundo?': respostas.q2,
+      '3) Quais são os 7 símbolos bíblicos atribuídos ao Espírito Santo mencionado nesta lição?': respostas.q3,
+      '4) Qual é a diferença prática entre a experiência do "Batismo com o Espírito Santo" e a "Plenitude do Espírito Santo"?': respostas.q4,
+      '5) O que se entende por "blasfêmia contra o Espírito Santo" segundo o contexto bíblico apresentado?': respostas.q5,
+    };
+
+    try {
+      const docRef = doc(db, 'users_progress', user.uid);
+      await setDoc(docRef, {
+        respostasQuestionarios: {
+          'o-espirito-santo': payloadRespostas // ALTERADO: Mudado de 'licao-4' para 'o-espirito-santo'
+        }
+      }, { merge: true });
+
+      exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
+    } catch (error) {
+      console.error(error);
+      exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
+    } finally {
+      setSalvando(false);
+    }
+  };
 
   return (
     <div className="licao-page">
+      {toast && (
+        <div className="toast-container">
+          <div className={`custom-toast toast-${toast.tipo}`}>
+            <span>{toast.mensagem}</span>
+          </div>
+        </div>
+      )}
+
       <button className="back-btn" onClick={onVoltar}>
         &larr; Voltar ao Menu
       </button>
@@ -59,9 +141,9 @@ export default function Licao4({ onVoltar }: LicaoProps) {
           </div>
 
           <p>
-            Atualmente, o Espírito Santo está na terra, habitando no coração de todos aqueles que 
+            Atualmente, o Espírito Santo está na terra, habitando no coração de todos os que 
             receberam Cristo Jesus como seu salvador (João 14:17). Sua missão prioritária é <strong>convencer o 
-            mundo do pecado, da justiça e do juízo</strong> (João 16:8-11). É Ele quem nos capacita para 
+            mundo do pecado, da justiça e do juízo</strong> (João 16:8-11). É Éle quem nos capacita para 
             pregarmos o Evangelho (Lucas 12:12), nos ajuda em nossas fraquezas e intercede por nós 
             junto ao Pai com gemidos inexprimíveis (Romanos 8:26).
           </p>
@@ -101,7 +183,7 @@ export default function Licao4({ onVoltar }: LicaoProps) {
         <section className="licao-section">
           <h2>3. O Batismo no Espírito Santo</h2>
           <p>
-            O batismo com o Espírito Santo é uma das experiências mais gloriosas na vida de um 
+            O batismo com o Espírito Santo é uma das experiências mais glorórias na vida de um 
             cristão. É uma capacitação sobrenatural dada por Deus ao crente objetivando 
             <strong> poder, graça e ousadia na Palavra</strong>, para o cumprimento do imperativo de pregar o Evangelho (Marcos 16:15; Atos 1:8).
           </p>
@@ -115,7 +197,7 @@ export default function Licao4({ onVoltar }: LicaoProps) {
           </div>
 
           <p>
-            <strong>Como saber se foi batizado?</strong> O batismo com o Espírito Santo é inicialmente evidencedo pelo 
+            <strong>Como saber se foi batizado?</strong> O batismo com o Espírito Santo é inicialmente evidenciado pelo 
             <strong> "falar em outras línguas"</strong> (Atos 2:4). Essas línguas são de natureza divina e, em alguns casos, podem ser humanas, tornando-se "estranhas" apenas para quem as profere (Atos 2:7-8).
           </p>
 
@@ -146,12 +228,12 @@ export default function Licao4({ onVoltar }: LicaoProps) {
             </div>
             <div className="pilar-card">
               <h4>3. Fé</h4>
-              <p>A ponte para o sobrenatural. É necessário crer que He galardoa os que O buscam (Hebreus 11:6).</p>
+              <p>A ponte para o sobrenatural. É necessário crer que ele existe, e que é galardoador dos que o buscam (Hebreus 11:6).</p>
             </div>
           </div>
 
           <div className="quadro-negro-box">
-            <h3>⚠️ Cuidado: A Blasfêmia contra o Espírito Santo</h3>
+            <h3>Aviso: A Blasfêmia contra o Espírito Santo</h3>
             <p>
               Jesus advertiu que todo pecado será perdoado, exceto a blasfêmia contra o Espírito Santo (Marcos 3:29; Lucas 12:10). 
               Ela ocorre quando alguém atribui de forma deliberada as obras puras do Espírito Santo como sendo de origem maligna ou de responsabilidade do diabo.
@@ -166,10 +248,10 @@ export default function Licao4({ onVoltar }: LicaoProps) {
           </p>
         </section>
 
-        <div className="section-separator"><span>📝</span></div>
+        <div className="section-separator"><span>▲</span></div>
 
         <section className="licao-section questionario-section">
-          <h2>📝 Questionário do Discípulo</h2>
+          <h2>Questionário do Discípulo</h2>
           <p className="sub-q">Responda às questões abaixo com base nos ensinamentos da Lição 4:</p>
           
           <div className="form-group">
@@ -222,9 +304,22 @@ export default function Licao4({ onVoltar }: LicaoProps) {
             />
           </div>
 
-          <button className="btn-gabarito" onClick={() => setMostrarGabarito(!mostrarGabarito)}>
-            {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
-          </button>
+          <div className="btn-group-questionario">
+            <button 
+              className="btn-gabarito" 
+              onClick={handleSalvarRespostas}
+              disabled={salvando}
+            >
+              {salvando ? 'Salvando...' : 'Salvar Respostas'}
+            </button>
+
+            <button 
+              className="btn-gabarito btn-gabarito-flex" 
+              onClick={() => setMostrarGabarito(!mostrarGabarito)}
+            >
+              {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
+            </button>
+          </div>
 
           {mostrarGabarito && (
             <div className="gabarito-box">

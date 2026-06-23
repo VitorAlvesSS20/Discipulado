@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 import './Licao1.css';
 
 interface LicaoProps {
@@ -10,9 +12,88 @@ export default function Licao8({ onVoltar }: LicaoProps) {
     q1: '', q2: '', q3: '', q4: '', q5: ''
   });
   const [mostrarGabarito, setMostrarGabarito] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+  const [toast, setToast] = useState<{ mensagem: string; tipo: 'success' | 'error' } | null>(null);
+
+  useEffect(() => {
+    const carregarRespostas = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const docRef = doc(db, 'users_progress', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.respostasQuestionarios && data.respostasQuestionarios['o-cristao']) {
+            const salvas = data.respostasQuestionarios['o-cristao'];
+            setRespostas({
+              q1: salvas['1) De acordo com a lição, o que verdadeiramente significa ser um Cristão?'] || '',
+              q2: salvas['2) Em qual cidade histórica os discípulos foram chamados de Cristãos pela primeira vez?'] || '',
+              q3: salvas['3) Qual é a definição teológica de "Igreja" apresentada no texto?'] || '',
+              q4: salvas['4) Quais são os três principais símbolos ou comparações da Igreja encontrados na Bíblia?'] || '',
+              q5: salvas['5) Escreva com suas palavras qual deve ser a sua relação prática diária com a Igreja local:'] || ''
+            });
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    carregarRespostas();
+  }, []);
+
+  const exibirToast = (mensagem: string, tipo: 'success' | 'error') => {
+    setToast({ mensagem, tipo });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleSalvarRespostas = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      exibirToast('Você precisa estar autenticado para salvar suas respostas.', 'error');
+      return;
+    }
+
+    setSalvando(true);
+
+    const payloadRespostas = {
+      '1) De acordo com a lição, o que verdadeiramente significa ser um Cristão?': respostas.q1,
+      '2) Em qual cidade histórica os discípulos foram chamados de Cristãos pela primeira vez?': respostas.q2,
+      '3) Qual é a definição teológica de "Igreja" apresentada no texto?': respostas.q3,
+      '4) Quais são os três principais símbolos ou comparações da Igreja encontrados na Bíblia?': respostas.q4,
+      '5) Escreva com suas palavras qual deve ser a sua relação prática diária com a Igreja local:': respostas.q5,
+    };
+
+    try {
+      const docRef = doc(db, 'users_progress', user.uid);
+      await setDoc(docRef, {
+        respostasQuestionarios: {
+          'o-cristao': payloadRespostas
+        }
+      }, { merge: true });
+
+      exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
+    } catch (error) {
+      console.error(error);
+      exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
+    } finally {
+      setSalvando(false);
+    }
+  };
 
   return (
     <div className="licao-page">
+      {toast && (
+        <div className="toast-container">
+          <div className={`custom-toast toast-${toast.tipo}`}>
+            <span>{toast.mensagem}</span>
+          </div>
+        </div>
+      )}
+
       <button className="back-btn" onClick={onVoltar}>
         &larr; Voltar ao Menu
       </button>
@@ -37,7 +118,7 @@ export default function Licao8({ onVoltar }: LicaoProps) {
           </p>
           <p>
             Quando a igreja primitiva nasceu no dia de Pentecostes (por volta do ano 30 d.C., conforme registrado em Atos 2), 
-            os discípulos ainda não possuíam esse codinome. Somente por volta do ano 43 d.C., na cidade de 
+            dos discípulos ainda não possuíam esse codinome. Somente por volta do ano 43 d.C., na cidade de 
             <strong> Antioquia</strong>, é que os seguidores de Jesus foram chamados pela primeira vez de "Cristãos" (Atos 11:26).
           </p>
 
@@ -58,10 +139,10 @@ export default function Licao8({ onVoltar }: LicaoProps) {
           </p>
         </section>
 
-        <div className="section-separator"><span>✝️</span></div>
+        <div className="section-separator"><span>◆</span></div>
 
         <section className="licao-section">
-          <h2>2. O Que é a Igreja?</h2>
+          <h2>2. O Que é A Igreja?</h2>
           <p>
             Denomina-se <strong>Igreja</strong> o corpo místico de Cristo (Colossenses 1:18). Trata-se do grupo de pessoas 
             lavadas e remidas pelo sangue de Jesus, que experimentaram e assumiram a salvação. 
@@ -79,7 +160,7 @@ export default function Licao8({ onVoltar }: LicaoProps) {
 
           <p>
             Apesar de existirem inúmeras denominações históricas e contemporâneas (como Assembleia de Deus, Batista, Quadrangular, etc.), 
-            a Igreja de Cristo em essência é <strong>única</strong> (Efésios 4:4), composta por milhares de membros espalhados por todo o mundo, 
+            la Igreja de Cristo em essência é <strong>única</strong> (Efésios 4:4), composta por milhares de membros espalhados por todo o mundo, 
             incluindo aqueles que já dormiram no Senhor na esperança da ressurreição (1 Tessalonicenses 4:13-17).
           </p>
         </section>
@@ -115,10 +196,10 @@ export default function Licao8({ onVoltar }: LicaoProps) {
           </div>
         </section>
 
-        <div className="section-separator"><span>📝</span></div>
+        <div className="section-separator"><span>◆</span></div>
 
         <section className="licao-section questionario-section">
-          <h2>📝 Questionário do Discípulo</h2>
+          <h2>Questionário do Discípulo</h2>
           <p className="sub-q">Responda às questões abaixo para fixação do aprendizado da Lição 8:</p>
           
           <div className="form-group">
@@ -171,9 +252,22 @@ export default function Licao8({ onVoltar }: LicaoProps) {
             />
           </div>
 
-          <button className="btn-gabarito" onClick={() => setMostrarGabarito(!mostrarGabarito)}>
-            {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
-          </button>
+          <div className="btn-group-questionario">
+            <button 
+              className="btn-gabarito" 
+              onClick={handleSalvarRespostas}
+              disabled={salvando}
+            >
+              {salvando ? 'Salvando...' : 'Salvar Respostas'}
+            </button>
+
+            <button 
+              className="btn-gabarito btn-gabarito-flex" 
+              onClick={() => setMostrarGabarito(!mostrarGabarito)}
+            >
+              {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
+            </button>
+          </div>
 
           {mostrarGabarito && (
             <div className="gabarito-box">

@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 import './Licao1.css';
 import imagemCeia from '../assets/ceia.jpg';
 
@@ -11,9 +13,88 @@ export default function Licao14({ onVoltar }: LicaoProps) {
     q1: '', q2: '', q3: '', q4: '', q5: ''
   });
   const [mostrarGabarito, setMostrarGabarito] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+  const [toast, setToast] = useState<{ mensagem: string; tipo: 'success' | 'error' } | null>(null);
+
+  useEffect(() => {
+    const carregarRespostas = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const docRef = doc(db, 'users_progress', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.respostasQuestionarios && data.respostasQuestionarios['a-ceia-do-senhor']) {
+            const salvas = data.respostasQuestionarios['a-ceia-do-senhor'];
+            setRespostas({
+              q1: salvas['1) Quais são as duas ordenanças deixadas por Jesus à Igreja e qual a diferença de frequência entre elas?'] || '',
+              q2: salvas['2) O que representam o pão e o vinho na Ceia e quais lições fundamentais do Evangelho eles nos lembram?'] || '',
+              q3: salvas['3) Por que a doutrina da Transubstanciação é considerada biblicamente incorreta?'] || '',
+              q4: salvas['4) Qual é o perfil bíblico de quem está apto a participar da Ceia do Senhor?'] || '',
+              q5: salvas['5) O que significa participar da Ceia "indignamente" segundo a advertência de Paulo aos Coríntios?'] || ''
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao carregar respostas:', error);
+      }
+    };
+
+    carregarRespostas();
+  }, []);
+
+  const exibirToast = (mensagem: string, tipo: 'success' | 'error') => {
+    setToast({ mensagem, tipo });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleSalvarRespostas = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      exibirToast('Você precisa estar autenticado para salvar suas respostas.', 'error');
+      return;
+    }
+
+    setSalvando(true);
+
+    const payloadRespostas = {
+      '1) Quais são as duas ordenanças deixadas por Jesus à Igreja e qual a diferença de frequência entre elas?': respostas.q1,
+      '2) O que representam o pão e o vinho na Ceia e quais lições fundamentais do Evangelho eles nos lembram?': respostas.q2,
+      '3) Por que a doutrina da Transubstanciação é considerada biblicamente incorreta?': respostas.q3,
+      '4) Qual é o perfil bíblico de quem está apto a participar da Ceia do Senhor?': respostas.q4,
+      '5) O que significa participar da Ceia "indignamente" segundo a advertência de Paulo aos Coríntios?': respostas.q5,
+    };
+
+    try {
+      const docRef = doc(db, 'users_progress', user.uid);
+      await setDoc(docRef, {
+        respostasQuestionarios: {
+          'a-ceia-do-senhor': payloadRespostas
+        }
+      }, { merge: true });
+
+      exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
+    } catch (error) {
+      console.error('Erro ao salvar respostas:', error);
+      exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
+    } finally {
+      setSalvando(false);
+    }
+  };
 
   return (
     <div className="licao-page">
+      {toast && (
+        <div className="toast-container">
+          <div className={`custom-toast toast-${toast.tipo}`}>
+            <span>{toast.mensagem}</span>
+          </div>
+        </div>
+      )}
+
       <button className="back-btn" onClick={onVoltar}>
         &larr; Voltar ao Menu
       </button>
@@ -74,7 +155,9 @@ export default function Licao14({ onVoltar }: LicaoProps) {
             <li><strong>Presente (Unidade e Alimento):</strong> Nutrir a alma dos fiéis e evidenciar visivelmente a unidade da Igreja como um só corpo (1 Coríntios 10:17; Salmos 133:1).</li>
             <li><strong>Futuro (Esperança):</strong> Aponta diretamente para uma refeição gloriosa e futura na presença de Deus: as Bodas do Cordeiro (Mateus 26:29; Apocalipse 19:9).</li>
           </ul>
-          <blockquote>
+          
+          {/* Corrigido aqui: adicionado o caractere '<' omitido anteriormente */}
+          <blockquote className="clima-celebracao-box">
             <strong>Clima de Celebração:</strong> A Ceia não deve ser um momento de lamento fúnebre ou desespero alimentado por medo. É um momento solene e reverente, mas de intensa <strong>festa e alegria espiritual</strong> pelo livramento e vitória garantidos pelo sangue de Cristo!
           </blockquote>
         </section>
@@ -99,7 +182,7 @@ export default function Licao14({ onVoltar }: LicaoProps) {
         <div className="section-separator"><span>📝</span></div>
 
         <section className="licao-section questionario-section">
-          <h2>📝 Questionário do Discípulo</h2>
+          <h2>Questionário do Discípulo</h2>
           <p className="sub-q">Responda às questões avaliando os fundamentos bíblicos da Ceia do Senhor:</p>
           
           <div className="form-group">
@@ -152,9 +235,22 @@ export default function Licao14({ onVoltar }: LicaoProps) {
             />
           </div>
 
-          <button className="btn-gabarito" onClick={() => setMostrarGabarito(!mostrarGabarito)}>
-            {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
-          </button>
+          <div className="btn-group-questionario">
+            <button 
+              className="btn-gabarito" 
+              onClick={handleSalvarRespostas}
+              disabled={salvando}
+            >
+              {salvando ? 'Salvando...' : 'Salvar Respostas'}
+            </button>
+
+            <button 
+              className="btn-gabarito btn-gabarito-flex" 
+              onClick={() => setMostrarGabarito(!mostrarGabarito)}
+            >
+              {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
+            </button>
+          </div>
 
           {mostrarGabarito && (
             <div className="gabarito-box">
@@ -163,7 +259,7 @@ export default function Licao14({ onVoltar }: LicaoProps) {
                 <li><strong>R1:</strong> O Batismo (realizado uma única vez, marcando o início da vida cristã) e a Ceia do Senhor (celebrada continuamente ao longo da vida como sinal de comunhão contínua).</li>
                 <li><strong>R2:</strong> O pão representa o corpo de Cristo (lembra a Encarnação e Seu sofrimento); o vinho representa Seu sangue (lembra a Expiação e a Nova Aliança de perdão).</li>
                 <li><strong>R3:</strong> Porque quando Jesus instituiu a ordenança, Ele ainda não havia morrido. Seu corpo físico estava perfeitamente ali, provando que os elementos são símbolos sagrados e não a carne e o sangue literais.</li>
-                <li><strong>R4:</strong> Pessoas que creem verdadeiramente in Cristo, mostram frutos de conversão, passaram pelo batismo em águas e zelam pela comunhão com Deus e com a igreja local.</li>
+                <li><strong>R4:</strong> Pessoas que creem verdadeiramente em Cristo, mostram frutos de conversão, passaram pelo batismo em águas e zelam pela comunhão com Deus e com a igreja local.</li>
                 <li><strong>R5:</strong> Refere-se à indignidade nas ações e atitudes: falta de reverência, falta de discernimento espiritual do sacrifício, divisões, egoísmo e atitudes que ferem a comunhão coletiva e a santidade do momento.</li>
               </ul>
             </div>

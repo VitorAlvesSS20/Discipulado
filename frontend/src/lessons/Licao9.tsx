@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 import './Licao1.css';
 
 interface LicaoProps {
@@ -10,9 +12,88 @@ export default function Licao9({ onVoltar }: LicaoProps) {
     q1: '', q2: '', q3: '', q4: '', q5: ''
   });
   const [mostrarGabarito, setMostrarGabarito] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+  const [toast, setToast] = useState<{ mensagem: string; tipo: 'success' | 'error' } | null>(null);
+
+  useEffect(() => {
+    const carregarRespostas = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const docRef = doc(db, 'users_progress', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.respostasQuestionarios && data.respostasQuestionarios['a-conduta-crista']) {
+            const salvas = data.respostasQuestionarios['a-conduta-crista'];
+            setRespostas({
+              q1: salvas['1) Com base na lição, defina o que é a Conduta Cristã:'] || '',
+              q2: salvas['2) Quais foram as duas características marcantes atribuídas por Jesus aos Seus discípulos em Mateus 5:13-16?'] || '',
+              q3: salvas['3) O que a metáfora da "luz" representa especificamente na vida prática do crente?'] || '',
+              q4: salvas['4) O que o "sal" simboliza na vida do cristão e quais as suas duas propriedades descritas na lição?'] || '',
+              q5: salvas['5) De que forma sutil o diabo tem agido nestes dias modernos para tentar neutralizar o cristão?'] || ''
+            });
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    carregarRespostas();
+  }, []);
+
+  const exibirToast = (mensagem: string, tipo: 'success' | 'error') => {
+    setToast({ mensagem, tipo });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleSalvarRespostas = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      exibirToast('Você precisa estar autenticado para salvar suas respostas.', 'error');
+      return;
+    }
+
+    setSalvando(true);
+
+    const payloadRespostas = {
+      '1) Com base na lição, defina o que é a Conduta Cristã:': respostas.q1,
+      '2) Quais foram as duas características marcantes atribuídas por Jesus aos Seus discípulos em Mateus 5:13-16?': respostas.q2,
+      '3) O que a metáfora da "luz" representa especificamente na vida prática do crente?': respostas.q3,
+      '4) O que o "sal" simboliza na vida do cristão e quais as suas duas propriedades descritas na lição?': respostas.q4,
+      '5) De que forma sutil o diabo tem agido nestes dias modernos para tentar neutralizar o cristão?': respostas.q5,
+    };
+
+    try {
+      const docRef = doc(db, 'users_progress', user.uid);
+      await setDoc(docRef, {
+        respostasQuestionarios: {
+          'a-conduta-crista': payloadRespostas
+        }
+      }, { merge: true });
+
+      exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
+    } catch (error) {
+      console.error(error);
+      exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
+    } finally {
+      setSalvando(false);
+    }
+  };
 
   return (
     <div className="licao-page">
+      {toast && (
+        <div className="toast-container">
+          <div className={`custom-toast toast-${toast.tipo}`}>
+            <span>{toast.mensagem}</span>
+          </div>
+        </div>
+      )}
+
       <button className="back-btn" onClick={onVoltar}>
         &larr; Voltar ao Menu
       </button>
@@ -40,7 +121,7 @@ export default function Licao9({ onVoltar }: LicaoProps) {
           </p>
         </section>
 
-        <div className="section-separator"><span>✝️</span></div>
+        <div className="section-separator"><span>◆</span></div>
 
         <section className="licao-section">
           <h2>2. Sal da Terra e Luz do Mundo</h2>
@@ -112,10 +193,10 @@ export default function Licao9({ onVoltar }: LicaoProps) {
           </div>
         </section>
 
-        <div className="section-separator"><span>📝</span></div>
+        <div className="section-separator"><span>◆</span></div>
 
         <section className="licao-section questionario-section">
-          <h2>📝 Questionário do Discípulo</h2>
+          <h2>Questionário do Discípulo</h2>
           <p className="sub-q">Responda às questões com base no texto estudado:</p>
           
           <div className="form-group">
@@ -168,9 +249,22 @@ export default function Licao9({ onVoltar }: LicaoProps) {
             />
           </div>
 
-          <button className="btn-gabarito" onClick={() => setMostrarGabarito(!mostrarGabarito)}>
-            {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
-          </button>
+          <div className="btn-group-questionario">
+            <button 
+              className="btn-gabarito" 
+              onClick={handleSalvarRespostas}
+              disabled={salvando}
+            >
+              {salvando ? 'Salvando...' : 'Salvar Respostas'}
+            </button>
+
+            <button 
+              className="btn-gabarito btn-gabarito-flex" 
+              onClick={() => setMostrarGabarito(!mostrarGabarito)}
+            >
+              {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
+            </button>
+          </div>
 
           {mostrarGabarito && (
             <div className="gabarito-box">

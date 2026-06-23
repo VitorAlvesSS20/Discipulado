@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 import './Licao1.css';
 
 interface LicaoProps {
@@ -10,9 +12,88 @@ export default function Licao5({ onVoltar }: LicaoProps) {
     q1: '', q2: '', q3: '', q4: '', q5: ''
   });
   const [mostrarGabarito, setMostrarGabarito] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+  const [toast, setToast] = useState<{ mensagem: string; tipo: 'success' | 'error' } | null>(null);
+
+  useEffect(() => {
+    const carregarRespostas = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const docRef = doc(db, 'users_progress', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.respostasQuestionarios && data.respostasQuestionarios['o-pecado']) {
+            const salvas = data.respostasQuestionarios['o-pecado'];
+            setRespostas({
+              q1: salvas['1) Originalmente, o que significa a palavra pecado?'] || '',
+              q2: salvas['2) Cite algumas das consequências trazidas pelo ingresso do pecado na humanidade:'] || '',
+              q3: salvas['3) Quais são as outras três definições de pecado apresentadas pela Bíblia nesta lição?'] || '',
+              q4: salvas['4) O fato de Jesus perdoar os nossos pecados significa que estaremos imunes às suas consequências? Explique.'] || '',
+              q5: salvas['5) Quais são os quatro passos práticos citados para vencermos o pecado no dia a dia?'] || ''
+            });
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    carregarRespostas();
+  }, []);
+
+  const exibirToast = (mensagem: string, tipo: 'success' | 'error') => {
+    setToast({ mensagem, tipo });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleSalvarRespostas = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      exibirToast('Você precisa estar autenticado para salvar suas respostas.', 'error');
+      return;
+    }
+
+    setSalvando(true);
+
+    const payloadRespostas = {
+      '1) Originalmente, o que significa a palavra pecado?': respostas.q1,
+      '2) Cite algumas das consequências trazidas pelo ingresso do pecado na humanidade:': respostas.q2,
+      '3) Quais são as outras três definições de pecado apresentadas pela Bíblia nesta lição?': respostas.q3,
+      '4) O fato de Jesus perdoar os nossos pecados significa que estaremos imunes às suas consequências? Explique.': respostas.q4,
+      '5) Quais são os quatro passos práticos citados para vencermos o pecado no dia a dia?': respostas.q5,
+    };
+
+    try {
+      const docRef = doc(db, 'users_progress', user.uid);
+      await setDoc(docRef, {
+        respostasQuestionarios: {
+          'o-pecado': payloadRespostas
+        }
+      }, { merge: true });
+
+      exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
+    } catch (error) {
+      console.error(error);
+      exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
+    } finally {
+      setSalvando(false);
+    }
+  };
 
   return (
     <div className="licao-page">
+      {toast && (
+        <div className="toast-container">
+          <div className={`custom-toast toast-${toast.tipo}`}>
+            <span>{toast.mensagem}</span>
+          </div>
+        </div>
+      )}
+
       <button className="back-btn" onClick={onVoltar}>
         &larr; Voltar ao Menu
       </button>
@@ -50,7 +131,7 @@ export default function Licao5({ onVoltar }: LicaoProps) {
           </ul>
         </section>
 
-        <div className="section-separator"><span>✝️</span></div>
+        <div className="section-separator"><span>◆</span></div>
 
         <section className="licao-section">
           <h2>2. O Que é Pecado e sua Universalidade</h2>
@@ -113,7 +194,7 @@ export default function Licao5({ onVoltar }: LicaoProps) {
           </p>
         </section>
 
-        <div className="section-separator"><span>✝️</span></div>
+        <div className="section-separator"><span>◆</span></div>
 
         <section className="licao-section">
           <h2>4. Passos para Vencermos o Pecado</h2>
@@ -161,10 +242,10 @@ export default function Licao5({ onVoltar }: LicaoProps) {
           </div>
         </section>
 
-        <div className="section-separator"><span>📝</span></div>
+        <div className="section-separator"><span>◆</span></div>
 
         <section className="licao-section questionario-section">
-          <h2>📝 Questionário do Discípulo</h2>
+          <h2>Questionário do Discípulo</h2>
           <p className="sub-q">Responda às questões abaixo com base nos ensinamentos da Lição 5:</p>
           
           <div className="form-group">
@@ -217,9 +298,22 @@ export default function Licao5({ onVoltar }: LicaoProps) {
             />
           </div>
 
-          <button className="btn-gabarito" onClick={() => setMostrarGabarito(!mostrarGabarito)}>
-            {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
-          </button>
+          <div className="btn-group-questionario">
+            <button 
+              className="btn-gabarito" 
+              onClick={handleSalvarRespostas}
+              disabled={salvando}
+            >
+              {salvando ? 'Salvando...' : 'Salvar Respostas'}
+            </button>
+
+            <button 
+              className="btn-gabarito btn-gabarito-flex" 
+              onClick={() => setMostrarGabarito(!mostrarGabarito)}
+            >
+              {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
+            </button>
+          </div>
 
           {mostrarGabarito && (
             <div className="gabarito-box">

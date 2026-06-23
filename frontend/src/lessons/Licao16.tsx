@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 import './Licao1.css';
 
 interface LicaoProps {
@@ -10,9 +12,88 @@ export default function Licao16({ onVoltar }: LicaoProps) {
     q1: '', q2: '', q3: '', q4: '', q5: ''
   });
   const [mostrarGabarito, setMostrarGabarito] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+  const [toast, setToast] = useState<{ mensagem: string; tipo: 'success' | 'error' } | null>(null);
+
+  useEffect(() => {
+    const carregarRespostas = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const docRef = doc(db, 'users_progress', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.respostasQuestionarios && data.respostasQuestionarios['discipulo-gerando-discipulo']) {
+            const salvas = data.respostasQuestionarios['discipulo-gerando-discipulo'];
+            setRespostas({
+              q1: salvas['1) De acordo com o texto, qual é a missão integral da Igreja na terra e a quem ela se direciona primariamente?'] || '',
+              q2: salvas['2) Cite pelo menos três ações fundamentais que o Espírito Santo realiza no livro de Atos para capacitar os evangelizadores?'] || '',
+              q3: salvas['3) Qual é a diferença entre os conceitos de evangelização "Verbal" e "Pessoal", e por que eles precisam andar juntos?'] || '',
+              q4: salvas['4) Baseando-se no encontro de Jesus com a mulher samaritana (João 4), cite dois passos práticos que servem de modelo para o evangelismo:'] || '',
+              q5: salvas['5) Qual deve ser o comportamento prático e ético do discípulo no momento de abordagem uma pessoa para evangelizar?'] || ''
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao carregar respostas:', error);
+      }
+    };
+
+    carregarRespostas();
+  }, []);
+
+  const exibirToast = (mensagem: string, tipo: 'success' | 'error') => {
+    setToast({ mensagem, tipo });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleSalvarRespostas = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      exibirToast('Você precisa estar autenticado para salvar suas respostas.', 'error');
+      return;
+    }
+
+    setSalvando(true);
+
+    const payloadRespostas = {
+      '1) De acordo com o texto, qual é a missão integral da Igreja na terra e a quem ela se direciona primariamente?': respostas.q1,
+      '2) Cite pelo menos três ações fundamentais que o Espírito Santo realiza no livro de Atos para capacitar os evangelizadores?': respostas.q2,
+      '3) Qual é a diferença entre os conceitos de evangelização "Verbal" e "Pessoal", e por que eles precisam andar juntos?': respostas.q3,
+      '4) Baseando-se no encontro de Jesus com a mulher samaritana (João 4), cite dois passos práticos que servem de modelo para o evangelismo:': respostas.q4,
+      '5) Qual deve ser o comportamento prático e ético do discípulo no momento de abordagem uma pessoa para evangelizar?': respostas.q5,
+    };
+
+    try {
+      const docRef = doc(db, 'users_progress', user.uid);
+      await setDoc(docRef, {
+        respostasQuestionarios: {
+          'discipulo-gerando-discipulo': payloadRespostas
+        }
+      }, { merge: true });
+
+      exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
+    } catch (error) {
+      console.error('Erro ao salvar respostas:', error);
+      exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
+    } finally {
+      setSalvando(false);
+    }
+  };
 
   return (
     <div className="licao-page">
+      {toast && (
+        <div className="toast-container">
+          <div className={`custom-toast toast-${toast.tipo}`}>
+            <span>{toast.mensagem}</span>
+          </div>
+        </div>
+      )}
+
       <button className="back-btn" onClick={onVoltar}>
         &larr; Voltar ao Menu
       </button>
@@ -43,7 +124,7 @@ export default function Licao16({ onVoltar }: LicaoProps) {
         <section className="licao-section">
           <h2>2. O Evangelismo Pessoal e a Ação do Espírito Santo</h2>
           <p>
-            Evangelizar significa **comunicar o evangelho no poder do Espírito Santo**. Essa comunicação não é um mero repasse de informações intelectuais, mas sim o ato de tornar comum o conhecimento salvador de Cristo. Embora seja um chamado glorioso, pregar o evangelho pode apresentar barreiras, dificuldades e oposições (1 Coríntios 2:1-5; Apocalipse 1:9).
+            Evangelizar significa <strong>comunicar o evangelho no poder do Espírito Santo</strong>. Essa comunicação não é um mero repasse de informações intelectuais, mas sim o ato de tornar comum o conhecimento salvador de Cristo. Embora seja um chamado glorioso, pregar o evangelho pode apresentar barreiras, dificuldades e oposições (1 Coríntios 2:1-5; Apocalipse 1:9).
           </p>
           <p>É por isso que dependemos inteiramente do Espírito Santo. No livro de Atos, vemos que Ele:</p>
           <ul className="lista-cozy">
@@ -99,7 +180,7 @@ export default function Licao16({ onVoltar }: LicaoProps) {
         <div className="section-separator"><span>📝</span></div>
 
         <section className="licao-section questionario-section">
-          <h2>📝 Questionário do Discípulo</h2>
+          <h2>Questionário do Discípulo</h2>
           <p className="sub-q">Responda às questões avaliando o dever bíblico do evangelismo e do discipulado:</p>
           
           <div className="form-group">
@@ -152,9 +233,22 @@ export default function Licao16({ onVoltar }: LicaoProps) {
             />
           </div>
 
-          <button className="btn-gabarito" onClick={() => setMostrarGabarito(!mostrarGabarito)}>
-            {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
-          </button>
+          <div className="btn-group-questionario">
+            <button 
+              className="btn-gabarito" 
+              onClick={handleSalvarRespostas}
+              disabled={salvando}
+            >
+              {salvando ? 'Salvando...' : 'Salvar Respostas'}
+            </button>
+
+            <button 
+              className="btn-gabarito btn-gabarito-flex" 
+              onClick={() => setMostrarGabarito(!mostrarGabarito)}
+            >
+              {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
+            </button>
+          </div>
 
           {mostrarGabarito && (
             <div className="gabarito-box">

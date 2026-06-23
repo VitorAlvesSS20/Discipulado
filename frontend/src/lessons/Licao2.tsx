@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
+import { auth, db } from '../config/firebase';
 import './Licao1.css'; 
-
 
 interface LicaoProps {
   onVoltar: () => void;
@@ -11,6 +13,71 @@ export default function Licao2({ onVoltar }: LicaoProps) {
     q1: '', q2: '', q3: '', q4: '', q5: ''
   });
   const [mostrarGabarito, setMostrarGabarito] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+
+  useEffect(() => {
+    const carregarRespostas = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const docRef = doc(db, 'users_progress', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.respostasQuestionarios && data.respostasQuestionarios['deus']) {
+            const salvas = data.respostasQuestionarios['deus'];
+            setRespostas({
+              q1: salvas['1) Qual a definição teológica sobre Deus?'] || '',
+              q2: salvas['2) Qual a definição de Trindade?'] || '',
+              q3: salvas['3) Qual a figura geométrica utilizada para ilustrar didaticamente a Trindade?'] || '',
+              q4: salvas['4) Cite 03 atributos exclusivos de Deus:'] || '',
+              q5: salvas['5) Cite 03 atributos morais de Deus:'] || ''
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao carregar respostas:', error);
+      }
+    };
+
+    carregarRespostas();
+  }, []);
+
+  const handleSalvarRespostas = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      toast.error('Você precisa estar logado para salvar as respostas. 🔒');
+      return;
+    }
+
+    setSalvando(true);
+
+    const payloadRespostas = {
+      '1) Qual a definição teológica sobre Deus?': respostas.q1,
+      '2) Qual a definição de Trindade?': respostas.q2,
+      '3) Qual a figura geométrica utilizada para ilustrar didaticamente a Trindade?': respostas.q3,
+      '4) Cite 03 atributos exclusivos de Deus:': respostas.q4,
+      '5) Cite 03 atributos morais de Deus:': respostas.q5,
+    };
+
+    try {
+      const docRef = doc(db, 'users_progress', user.uid);
+      await setDoc(docRef, {
+        respostasQuestionarios: {
+          'deus': payloadRespostas 
+        }
+      }, { merge: true });
+
+      toast.success('Respostas salvas com sucesso! ');
+    } catch (error) {
+      console.error('Erro ao salvar respostas:', error);
+      toast.error('Erro ao salvar as respostas. Tente novamente.');
+    } finally {
+      setSalvando(false);
+    }
+  };
 
   return (
     <div className="licao-page">
@@ -74,7 +141,7 @@ export default function Licao2({ onVoltar }: LicaoProps) {
           </p>
           <ul className="lista-cozy">
             <li><strong>Peça Única:</strong> O triângulo é uma só figura geométrica inteira.</li>
-            <li><strong>Três Lados Distinctos:</strong> Possui exatamente três lados que formam sua estrutura.</li>
+            <li><strong>Três Lados Distintos:</strong> Possui exatamente três lados que formam sua estrutura.</li>
             <li><strong>Mesmas Dimensões:</strong> Todos os lados possuem rigorosamente o mesmo tamanho e peso.</li>
           </ul>
 
@@ -180,7 +247,7 @@ export default function Licao2({ onVoltar }: LicaoProps) {
         <div className="section-separator"><span>📝</span></div>
 
         <section className="licao-section questionario-section">
-          <h2>📝 Questionário do Discípulo</h2>
+          <h2>Questionário do Discípulo</h2>
           <p className="sub-q">Responda às questões abaixo com base nos ensinamentos da Lição 2:</p>
           
           <div className="form-group">
@@ -233,9 +300,15 @@ export default function Licao2({ onVoltar }: LicaoProps) {
             />
           </div>
 
-          <button className="btn-gabarito" onClick={() => setMostrarGabarito(!mostrarGabarito)}>
-            {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
-          </button>
+          <div className="btn-group-questionario">
+            <button className="btn-gabarito" onClick={handleSalvarRespostas} disabled={salvando}>
+              {salvando ? 'Salvando...' : 'Salvar Respostas'}
+            </button>
+
+            <button className="btn-gabarito btn-gabarito-flex" onClick={() => setMostrarGabarito(!mostrarGabarito)}>
+              {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
+            </button>
+          </div>
 
           {mostrarGabarito && (
             <div className="gabarito-box">

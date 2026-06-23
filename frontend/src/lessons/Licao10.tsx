@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 import './Licao1.css';
 
 interface LicaoProps {
@@ -10,9 +12,88 @@ export default function Licao10({ onVoltar }: LicaoProps) {
     q1: '', q2: '', q3: '', q4: '', q5: ''
   });
   const [mostrarGabarito, setMostrarGabarito] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+  const [toast, setToast] = useState<{ mensagem: string; tipo: 'success' | 'error' } | null>(null);
+
+  useEffect(() => {
+    const carregarRespostas = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const docRef = doc(db, 'users_progress', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.respostasQuestionarios && data.respostasQuestionarios['a-oracao']) {
+            const salvas = data.respostasQuestionarios['a-oracao'];
+            setRespostas({
+              q1: salvas['1) O que é a oração e por que ela é considerada um diálogo e não um monólogo?'] || '',
+              q2: salvas['2) Quais são as três condições fundamentais para que uma oração seja aceita por Deus?'] || '',
+              q3: salvas['3) O posicionamento físico do corpo (como estar em pé ou de joelhos) determina a qualidade da nossa oração? Justifique:'] || '',
+              q4: salvas['4) Cite pelo menos três obstáculos mencionados no texto que impedem o sucesso de uma oração:'] || '',
+              q5: salvas['5) Explique o que acontece de forma prática quando pedimos "paciência" ou "força" a Deus nas nossas orações:'] || ''
+            });
+          }
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    carregarRespostas();
+  }, []);
+
+  const exibirToast = (mensagem: string, tipo: 'success' | 'error') => {
+    setToast({ mensagem, tipo });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleSalvarRespostas = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      exibirToast('Você precisa estar autenticado para salvar suas respostas.', 'error');
+      return;
+    }
+
+    setSalvando(true);
+
+    const payloadRespostas = {
+      '1) O que é a oração e por que ela é considerada um diálogo e não um monólogo?': respostas.q1,
+      '2) Quais são as três condições fundamentais para que uma oração seja aceita por Deus?': respostas.q2,
+      '3) O posicionamento físico do corpo (como estar em pé ou de joelhos) determina a qualidade da nossa oração? Justifique:': respostas.q3,
+      '4) Cite pelo menos três obstáculos mencionados no texto que impedem o sucesso de uma oração:': respostas.q4,
+      '5) Explique o que acontece de forma prática quando pedimos "paciência" ou "força" a Deus nas nossas orações:': respostas.q5,
+    };
+
+    try {
+      const docRef = doc(db, 'users_progress', user.uid);
+      await setDoc(docRef, {
+        respostasQuestionarios: {
+          'a-oracao': payloadRespostas
+        }
+      }, { merge: true });
+
+      exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
+    } catch (error) {
+      console.error(error);
+      exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
+    } finally {
+      setSalvando(false);
+    }
+  };
 
   return (
     <div className="licao-page">
+      {toast && (
+        <div className="toast-container">
+          <div className={`custom-toast toast-${toast.tipo}`}>
+            <span>{toast.mensagem}</span>
+          </div>
+        </div>
+      )}
+
       <button className="back-btn" onClick={onVoltar}>
         &larr; Voltar ao Menu
       </button>
@@ -137,7 +218,7 @@ export default function Licao10({ onVoltar }: LicaoProps) {
         <div className="section-separator"><span>📝</span></div>
 
         <section className="licao-section questionario-section">
-          <h2>📝 Questionário do Discípulo</h2>
+          <h2>Questionário do Discípulo</h2>
           <p className="sub-q">Responda às perguntas com base no conteúdo estudado:</p>
           
           <div className="form-group">
@@ -190,9 +271,22 @@ export default function Licao10({ onVoltar }: LicaoProps) {
             />
           </div>
 
-          <button className="btn-gabarito" onClick={() => setMostrarGabarito(!mostrarGabarito)}>
-            {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
-          </button>
+          <div className="btn-group-questionario">
+            <button 
+              className="btn-gabarito" 
+              onClick={handleSalvarRespostas}
+              disabled={salvando}
+            >
+              {salvando ? 'Salvando...' : 'Salvar Respostas'}
+            </button>
+
+            <button 
+              className="btn-gabarito btn-gabarito-flex" 
+              onClick={() => setMostrarGabarito(!mostrarGabarito)}
+            >
+              {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
+            </button>
+          </div>
 
           {mostrarGabarito && (
             <div className="gabarito-box">

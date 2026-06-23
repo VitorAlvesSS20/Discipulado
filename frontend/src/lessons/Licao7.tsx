@@ -49,7 +49,7 @@ export default function Licao7({ onVoltar }: LicaoProps) {
           </ul>
         </section>
 
-        <div className="section-separator"><span>✝️</span></div>
+        <div className="section-separator"><span>◆</span></div>
 
         <section className="licao-section">
           <h2>2. O Tribunal de Cristo e as Bodas do Cordeiro</h2>
@@ -76,13 +76,13 @@ export default function Licao7({ onVoltar }: LicaoProps) {
           <h3>Significado e Desdobramentos da Manifestação:</h3>
           <ol className="lista-cozy">
             <li><strong>Livramento de Israel:</strong> Cristo Se revelará a Israel, salvando a nação do exército inimigo sob a regência do Anticristo. Israel centralizará suas atenções nEle e haverá pranto e quebrantamento (Zacarias 12:10).</li>
-            <li><strong>Glorificação Pública da Igreja:</strong> O mundo contemplará a Igreja que antes era espezinhada e perseguida, agora manifestada em glória com o seu Senhor.</li>
+            <li><strong>Glorificação Pública da Igreja:</strong> O mundo contemplará a Igreja que antes era espezinhada e perseguida, agora manifestada in glória com o seu Senhor.</li>
             <li><strong>Pavor dos Ímpios:</strong> Os rebeldes entrarão em desespero absoluto, clamando aos montes que caiam sobre eles diante da manifestação da Ira do Cordeiro (Apocalipse 6:16-17).</li>
             <li><strong>Vitória Sobrenatural:</strong> Cristo destruirá as forças inimigas miraculosamente pelo sopro e pela palavra que sai da Sua boca (Apocalipse 19:21). O Anticristo e o Falso Profeta serão lançados no Lago de Fogo, e Satanás será aprisionado por mil anos (Apocalipse 19:20; 20:2).</li>
           </ol>
         </section>
 
-        <div className="section-separator"><span>✝️</span></div>
+        <div className="section-separator"><span>◆</span></div>
 
         <section className="licao-section">
           <h2>4. O Reino Milenial de Cristo</h2>
@@ -104,7 +104,7 @@ export default function Licao7({ onVoltar }: LicaoProps) {
           </div>
         </section>
 
-        <div className="section-separator"><span>▲</span></div>
+        <div className="section-separator"><span>◆</span></div>
 
         <section className="licao-section">
           <h2>5. O Juízo do Grande Trono Branco e a Eternidade</h2>

@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 import './Licao1.css';
 
 interface LicaoProps {
@@ -6,20 +8,99 @@ interface LicaoProps {
 }
 
 export default function Licao1({ onVoltar }: LicaoProps) {
-  // Estado para controlar as respostas do questionário
   const [respostas, setRespostas] = useState({
     q1: '', q2: '', q3: '', q4: '', q5: ''
   });
   const [mostrarGabarito, setMostrarGabarito] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+  const [toast, setToast] = useState<{ mensagem: string; tipo: 'success' | 'error' } | null>(null);
+
+  useEffect(() => {
+    const carregarRespostas = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const docRef = doc(db, 'users_progress', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          // ALTERADO: Mudado de 'licao-1' para 'a-biblia'
+          if (data.respostasQuestionarios && data.respostasQuestionarios['a-biblia']) {
+            const salvas = data.respostasQuestionarios['a-biblia'];
+            setRespostas({
+              q1: salvas['1) Mencione, pelo menos, três títulos dados à Bíblia:'] || '',
+              q2: salvas['2) Quais os idiomas originais em que a Bíblia foi escrita?'] || '',
+              q3: salvas['3) O que significa o vocábulo Bíblia?'] || '',
+              q4: salvas['4) Em quantos anos aproximadamente a Bíblia foi formada?'] || '',
+              q5: salvas['5) Quantos escritores humanos participaram da escrita da Bíblia?'] || ''
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao carregar respostas:', error);
+      }
+    };
+
+    carregarRespostas();
+  }, []);
+
+  const exibirToast = (mensagem: string, tipo: 'success' | 'error') => {
+    setToast({ mensagem, tipo });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleSalvarRespostas = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      exibirToast('Você precisa estar autenticado para salvar suas respostas.', 'error');
+      return;
+    }
+
+    setSalvando(true);
+
+    const payloadRespostas = {
+      '1) Mencione, pelo menos, três títulos dados à Bíblia:': respostas.q1,
+      '2) Quais os idiomas originais em que a Bíblia foi escrita?': respostas.q2,
+      '3) O que significa o vocábulo Bíblia?': respostas.q3,
+      '4) Em quantos anos aproximadamente a Bíblia foi formada?': respostas.q4,
+      '5) Quantos escritores humanos participaram da escrita da Bíblia?': respostas.q5,
+    };
+
+    try {
+      const docRef = doc(db, 'users_progress', user.uid);
+      await setDoc(docRef, {
+        respostasQuestionarios: {
+          'a-biblia': payloadRespostas // ALTERADO: Mudado de 'licao-1' para 'a-biblia'
+        }
+      }, { merge: true });
+
+      exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
+    } catch (error) {
+      console.error(error);
+      exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
+    } finally {
+      setSalvando(false);
+    }
+  };
 
   return (
     <div className="licao-page">
+      {toast && (
+        <div className="toast-container">
+          <div className={`custom-toast toast-${toast.tipo}`}>
+            {/* Emojis removidos daqui de dentro */}
+            <span>{toast.mensagem}</span>
+          </div>
+        </div>
+      )}
+
       <button className="back-btn" onClick={onVoltar}>
         &larr; Voltar ao Menu
       </button>
 
       <article className="licao-container">
-        {/* Cabeçalho da Lição - Estilo Menu Especial do Dia */}
         <header className="licao-header">
           <span className="licao-badge">Módulo: Doutrinas</span>
           <h1>Lição 1: A Bíblia Sagrada</h1>
@@ -30,7 +111,6 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           </blockquote>
         </header>
 
-        {/* Seção 1: A Necessidade da Revelação */}
         <section className="licao-section">
           <h2>1. A Necessidade da Revelação Divina</h2>
           <p>
@@ -40,13 +120,13 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           </p>
           <p>
             Deus, em Sua infinita graça, moveu o coração de pessoas específicas ao longo da história. Sob a supervisão, 
-            inspiração e preservação do <strong>Espírito Santo</strong>, eles deitaram em letras as Palavras eternas de Deus, 
+            aspiração e preservação do <strong>Espírito Santo</strong>, eles deitaram em letras as Palavras eternas de Deus, 
             reunindo-as em um único compêndio de revelação divina que hoje conhecemos e reverenciamos como a <strong>Bíblia Sagrada</strong>.
           </p>
 
           <div className="nota-teologica">
             <h3>A Doutrina da Inspiração</h3>
-            <p>O Apóstolo Pedro confirma esse mistério e cooperação divino-humana:</p>
+            <p>O Apóstolo Pedro confirma esse misterioso e cooperação divino-humana:</p>
             <p className="citacao-biblica">
               "Porque a profecia nunca foi produzida por vontade de homem algum, mas os homens santos de Deus falaram inspirados pelo Espírito Santo." 
               <span>— 2 Pedro 1:21</span>
@@ -54,7 +134,6 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           </div>
         </section>
 
-        {/* Seção 2: Nomes e Significados */}
         <section className="licao-section">
           <h2>2. O Que Significa "Bíblia" e Seus Nomes</h2>
           <p>
@@ -77,13 +156,12 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           </div>
         </section>
 
-        {/* Seção 3: Estatísticas da Palavra */}
         <section className="licao-section">
           <h2>3. A Estrutura Meticulosa das Escrituras</h2>
           <p>
             Embora seja perfeitamente unificada em sua mensagem central, a Bíblia é dividida didaticamente em duas grandes porções: 
             o <strong>Antigo Testamento (AT)</strong>, que prepara e profetiza a vinda do Messias, e o <strong>Novo Testamento (NT)</strong>, 
-             que cumpre as promessas e apresenta a obra redentora de Jesus.
+            o qual cumpre as promessas e apresenta a obra redentora de Jesus.
           </p>
 
           <div className="tabela-cozy-wrapper">
@@ -120,7 +198,6 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           </div>
         </section>
 
-        {/* Seção 4: Pilares Fundamentais */}
         <section className="licao-section">
           <h2>4. Quatro Pilares Inabaláveis da Bíblia</h2>
           <div className="pilares-grid">
@@ -148,7 +225,6 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           </p>
         </section>
 
-        {/* Seção 5: Guia de Leitura Prática */}
         <section className="licao-section">
           <h2>5. Menu de Orientação para Leitura e Hermenêutica</h2>
           <p>Para extrair o puro alimento da Palavra sem distorções, siga o método clássico de estudo:</p>
@@ -174,9 +250,8 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           </div>
         </section>
 
-        {/* Seção 6: Questionário de Fixação */}
         <section className="licao-section questionario-section">
-          <h2>📝 Questionário do Discípulo</h2>
+          <h2>Questionário do Discípulo</h2>
           <p className="sub-q">Responda abaixo para testar seus conhecimentos obtidos nesta lição:</p>
           
           <div className="form-group">
@@ -229,9 +304,22 @@ export default function Licao1({ onVoltar }: LicaoProps) {
             />
           </div>
 
-          <button className="btn-gabarito" onClick={() => setMostrarGabarito(!mostrarGabarito)}>
-            {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
-          </button>
+          <div className="btn-group-questionario">
+            <button 
+              className="btn-gabarito" 
+              onClick={handleSalvarRespostas}
+              disabled={salvando}
+            >
+              {salvando ? 'Salvando...' : 'Salvar Respostas'}
+            </button>
+
+            <button 
+              className="btn-gabarito btn-gabarito-flex" 
+              onClick={() => setMostrarGabarito(!mostrarGabarito)}
+            >
+              {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
+            </button>
+          </div>
 
           {mostrarGabarito && (
             <div className="gabarito-box">

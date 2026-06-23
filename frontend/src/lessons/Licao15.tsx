@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 import './Licao1.css';
 
 interface LicaoProps {
@@ -10,9 +12,88 @@ export default function Licao15({ onVoltar }: LicaoProps) {
     q1: '', q2: '', q3: '', q4: '', q5: ''
   });
   const [mostrarGabarito, setMostrarGabarito] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+  const [toast, setToast] = useState<{ mensagem: string; tipo: 'success' | 'error' } | null>(null);
+
+  useEffect(() => {
+    const carregarRespostas = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const docRef = doc(db, 'users_progress', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.respostasQuestionarios && data.respostasQuestionarios['o-dizimo-e-as-ofertas']) {
+            const salvas = data.respostasQuestionarios['o-dizimo-e-as-ofertas'];
+            setRespostas({
+              q1: salvas['1) Qual é o significado literal da palavra "dízimo" e qual a diferença básica entre o ato de dizimar e o ato de ofertar?'] || '',
+              q2: salvas['2) No Antigo Testamento, qual era o propósito principal do dízimo estabelecido na Lei de Moisés?'] || '',
+              q3: salvas['3) Cite dois exemplos bíblicos de homens que entregaram dízimos ao Senhor de forma espontânea antes da instituição da Lei:'] || '',
+              q4: salvas['4) O que Jesus afirmou aos escribas e fariseus em Mateus 23:23 a respeito da prática de entregar os dízimos?'] || '',
+              q5: salvas['5) De acordo com o Novo Testamento, quais devem ser as atitudes do coração do cristão ao entregar uma oferta?'] || ''
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao carregar respostas:', error);
+      }
+    };
+
+    carregarRespostas();
+  }, []);
+
+  const exibirToast = (mensagem: string, tipo: 'success' | 'error') => {
+    setToast({ mensagem, tipo });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleSalvarRespostas = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      exibirToast('Você precisa estar autenticado para salvar suas respostas.', 'error');
+      return;
+    }
+
+    setSalvando(true);
+
+    const payloadRespostas = {
+      '1) Qual é o significado literal da palavra "dízimo" e qual a diferença básica entre o ato de dizimar e o ato de ofertar?': respostas.q1,
+      '2) No Antigo Testamento, qual era o propósito principal do dízimo estabelecido na Lei de Moisés?': respostas.q2,
+      '3) Cite dois exemplos bíblicos de homens que entregaram dízimos ao Senhor de forma espontânea antes da instituição da Lei:': respostas.q3,
+      '4) O que Jesus afirmou aos escribas e fariseus em Mateus 23:23 a respeito da prática de entregar os dízimos?': respostas.q4,
+      '5) De acordo com o Novo Testamento, quais devem ser as atitudes do coração do cristão ao entregar uma oferta?': respostas.q5,
+    };
+
+    try {
+      const docRef = doc(db, 'users_progress', user.uid);
+      await setDoc(docRef, {
+        respostasQuestionarios: {
+          'o-dizimo-e-as-ofertas': payloadRespostas
+        }
+      }, { merge: true });
+
+      exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
+    } catch (error) {
+      console.error('Erro ao salvar respostas:', error);
+      exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
+    } finally {
+      setSalvando(false);
+    }
+  };
 
   return (
     <div className="licao-page">
+      {toast && (
+        <div className="toast-container">
+          <div className={`custom-toast toast-${toast.tipo}`}>
+            <span>{toast.mensagem}</span>
+          </div>
+        </div>
+      )}
+
       <button className="back-btn" onClick={onVoltar}>
         &larr; Voltar ao Menu
       </button>
@@ -31,7 +112,7 @@ export default function Licao15({ onVoltar }: LicaoProps) {
         <section className="licao-section">
           <h2>1. O Significado do Dízimo</h2>
           <p>
-            O termo "dízimo" provém do latim <em>decimus</em> e refere-se estritamente à <strong>décima parte (10%)</strong> de algo. Na prática cristã, é um ato regular e voluntário pelo qual o fiel, fundamentado em sua devoção, separa dez por cento de suas rendas brutas para entregar à igreja local. Esse ato expressa o reconhecimento de que Deus é o Senhor absoluto e o provedor de todas as coisas (Salmos 24:1; Ageu 2:8).
+            O termo "dízimo" provém do latim <em>decimus</em> and refere-se estritamente à <strong>décima parte (10%)</strong> de algo. Na prática cristã, é um ato regular e voluntário pelo qual o fiel, fundamentado em sua devoção, separa dez por cento de suas rendas brutas para entregar à igreja local. Esse ato expressa o reconhecimento de que Deus é o Senhor absoluto e o provedor de todas as coisas (Salmos 24:1; Ageu 2:8).
           </p>
           <p>
             Contribuir com o dízimo não se trata de uma "negociata" com o Criador, tampouco uma tentativa de comprar favores ou barganhar milagres. Significa, genuinamente, devolver uma pequena parte daquilo que a própria fonte de todo bem já nos concedeu. Quando há recusa voluntária em entregar o dízimo, o crente demonstra que ainda não compreendeu totalmente o senhorio e a bondade de Deus em suas finanças.
@@ -112,7 +193,7 @@ export default function Licao15({ onVoltar }: LicaoProps) {
         <div className="section-separator"><span>📝</span></div>
 
         <section className="licao-section questionario-section">
-          <h2>📝 Questionário do Discípulo</h2>
+          <h2>Questionário do Discípulo</h2>
           <p className="sub-q">Responda às questões avaliando a base bíblica e doutrinária sobre Dízimos e Ofertas:</p>
           
           <div className="form-group">
@@ -165,9 +246,22 @@ export default function Licao15({ onVoltar }: LicaoProps) {
             />
           </div>
 
-          <button className="btn-gabarito" onClick={() => setMostrarGabarito(!mostrarGabarito)}>
-            {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
-          </button>
+          <div className="btn-group-questionario">
+            <button 
+              className="btn-gabarito" 
+              onClick={handleSalvarRespostas}
+              disabled={salvando}
+            >
+              {salvando ? 'Salvando...' : 'Salvar Respostas'}
+            </button>
+
+            <button 
+              className="btn-gabarito btn-gabarito-flex" 
+              onClick={() => setMostrarGabarito(!mostrarGabarito)}
+            >
+              {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
+            </button>
+          </div>
 
           {mostrarGabarito && (
             <div className="gabarito-box">

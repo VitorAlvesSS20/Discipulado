@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../config/firebase';
 import './Licao1.css';
 
 interface LicaoProps {
@@ -10,9 +12,88 @@ export default function Licao3({ onVoltar }: LicaoProps) {
     q1: '', q2: '', q3: '', q4: '', q5: ''
   });
   const [mostrarGabarito, setMostrarGabarito] = useState(false);
+  const [salvando, setSalvando] = useState(false);
+  const [toast, setToast] = useState<{ mensagem: string; tipo: 'success' | 'error' } | null>(null);
+
+  useEffect(() => {
+    const carregarRespostas = async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      try {
+        const docRef = doc(db, 'users_progress', user.uid);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          if (data.respostasQuestionarios && data.respostasQuestionarios['jesus']) {
+            const salvas = data.respostasQuestionarios['jesus'];
+            setRespostas({
+              q1: salvas['1) Quais são os cinco nomes profetizados por Isaías (Isaías 9:6) atribuídos a Jesus?'] || '',
+              q2: salvas['2) Onde Jesus nasceu e em qual cidade ele cresceu e desenvolveu-se?'] || '',
+              q3: salvas['3) De acordo com Lucas 19:10, qual era a missão principal de Jesus na terra?'] || '',
+              q4: salvas['4) O que aconteceu ao terceiro dia após a morte de Jesus, e por quantas pessoas estimadas ele foi visto?'] || '',
+              q5: salvas['5) O que é necessário fazermos para conhecermos mais sobre Jesus e obtermos o perdão dos nossos pecados?'] || ''
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Erro ao carregar respostas:', error);
+      }
+    };
+
+    carregarRespostas();
+  }, []);
+
+  const exibirToast = (mensagem: string, tipo: 'success' | 'error') => {
+    setToast({ mensagem, tipo });
+    setTimeout(() => setToast(null), 4000);
+  };
+
+  const handleSalvarRespostas = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      exibirToast('Você precisa estar autenticado para salvar suas respostas.', 'error');
+      return;
+    }
+
+    setSalvando(true);
+
+    const payloadRespostas = {
+      '1) Quais são os cinco nomes profetizados por Isaías (Isaías 9:6) atribuídos a Jesus?': respostas.q1,
+      '2) Onde Jesus nasceu e em qual cidade ele cresceu e desenvolveu-se?': respostas.q2,
+      '3) De acordo com Lucas 19:10, qual era a missão principal de Jesus na terra?': respostas.q3,
+      '4) O que aconteceu ao terceiro dia após a morte de Jesus, e por quantas pessoas estimadas ele foi visto?': respostas.q4,
+      '5) O que é necessário fazermos para conhecermos mais sobre Jesus e obtermos o perdão dos nossos pecados?': respostas.q5,
+    };
+
+    try {
+      const docRef = doc(db, 'users_progress', user.uid);
+      await setDoc(docRef, {
+        respostasQuestionarios: {
+          'jesus': payloadRespostas 
+        }
+      }, { merge: true });
+
+      exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
+    } catch (error) {
+      console.error(error);
+      exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
+    } finally {
+      setSalvando(false);
+    }
+  };
 
   return (
     <div className="licao-page">
+      {toast && (
+        <div className="toast-container">
+          <div className={`custom-toast toast-${toast.tipo}`}>
+            <span>{toast.mensagem}</span>
+          </div>
+        </div>
+      )}
+
       <button className="back-btn" onClick={onVoltar}>
         &larr; Voltar ao Menu
       </button>
@@ -57,7 +138,7 @@ export default function Licao3({ onVoltar }: LicaoProps) {
           </p>
         </section>
 
-        <div className="section-separator"><span>✝️</span></div>
+        <div className="section-separator"><span>+</span></div>
 
         <section className="licao-section">
           <h2>2. Divindade e Sacrifício na Cruz</h2>
@@ -110,10 +191,10 @@ export default function Licao3({ onVoltar }: LicaoProps) {
           </div>
         </section>
 
-        <div className="section-separator"><span>📝</span></div>
+        <div className="section-separator"><span>▲</span></div>
 
         <section className="licao-section questionario-section">
-          <h2>📝 Questionário do Discípulo</h2>
+          <h2>Questionário do Discípulo</h2>
           <p className="sub-q">Responda às questões abaixo com base nos ensinamentos da Lição 3:</p>
           
           <div className="form-group">
@@ -166,9 +247,22 @@ export default function Licao3({ onVoltar }: LicaoProps) {
             />
           </div>
 
-          <button className="btn-gabarito" onClick={() => setMostrarGabarito(!mostrarGabarito)}>
-            {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
-          </button>
+          <div className="btn-group-questionario">
+            <button 
+              className="btn-gabarito" 
+              onClick={handleSalvarRespostas}
+              disabled={salvando}
+            >
+              {salvando ? 'Salvando...' : 'Salvar Respostas'}
+            </button>
+
+            <button 
+              className="btn-gabarito btn-gabarito-flex" 
+              onClick={() => setMostrarGabarito(!mostrarGabarito)}
+            >
+              {mostrarGabarito ? "Ocultar Gabarito de Estudo" : "Conferir Gabarito de Respostas"}
+            </button>
+          </div>
 
           {mostrarGabarito && (
             <div className="gabarito-box">
