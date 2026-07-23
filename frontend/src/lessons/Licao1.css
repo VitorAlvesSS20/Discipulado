@@ -79,6 +79,7 @@ body {
   line-height: 1.2;
 }
 
+/* Divisor Decorativo */
 .decor-line {
   display: flex;
   align-items: center;
@@ -87,6 +88,8 @@ body {
   max-width: 250px;
   width: 100%;
   margin: 0 auto 30px auto;
+  color: var(--accent);
+  font-size: 1rem;
 }
 
 .decor-line::before,
@@ -98,9 +101,20 @@ body {
   border-bottom: 1px solid var(--border-color);
 }
 
-.decor-line::not(:empty) {
-  content: '◆';
-  color: var(--accent);
+.decor-line:empty::before {
+  margin-right: 5px;
+}
+
+.decor-line:empty::after {
+  margin-left: 5px;
+}
+
+.decor-line:empty {
+  font-size: 0;
+}
+
+.decor-line:empty::before,
+.decor-line:empty::after {
   font-size: 1rem;
 }
 
@@ -484,7 +498,7 @@ body {
   border: 2px solid var(--border-color);
   padding: 14px 28px;
   cursor: pointer;
-  font-weight: 750;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
   box-shadow: 5px 5px 0px 0px var(--border-color);

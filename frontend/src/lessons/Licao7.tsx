@@ -44,7 +44,7 @@ export default function Licao7({ onVoltar }: LicaoProps) {
             <li><strong>Iminência:</strong> Poderá ocorrer a qualquer momento; esse dia virá de surpresa, como um ladrão na noite (2 Pedro 3:10).</li>
             <li><strong>Restrito:</strong> Apenas os salvos o contemplarão e com Ele darão entrada nas mansões celestiais.</li>
             <li><strong>Ordem dos Eventos:</strong> Os mortos em Cristo ressuscitarão primeiro; em seguida, os salvos que estiverem vivos serão transformados (1 Tessalonicenses 4:16-17).</li>
-            <li><strong>Velocidade:</strong> O fato ocorrerá em uma fração de segundo, "num abrir e fechar de olhos" (1 Coríntios 15:51).</li>
+            <li><strong>Velocidade:</strong> O fato ocorrerá em uma fração de segundo, "num abrir e fechar de olhos" (1 Coríntios 15:51-52).</li>
             <li><strong>Glorificação:</strong> O corpo mortal e corruptível se revestirá de imortalidade e incorruptibilidade (1 Coríntios 15:52-53). Seremos finalmente semelhantes a Cristo (1 João 3:2), para a plena satisfação do Senhor (João 17:24).</li>
           </ul>
         </section>
@@ -60,7 +60,7 @@ export default function Licao7({ onVoltar }: LicaoProps) {
 
           <ul className="lista-cozy">
             <li><strong>O Tribunal de Cristo:</strong> Um evento exclusivo para os salvos, onde não se julgará a salvação, mas sim as obras e as reais intenções e motivações do coração de cada crente (2 Coríntios 5:10; 1 Coríntios 3:11-15).</li>
-            <li><strong>As Bodas do Cordeiro:</strong> A grande celebração que consumará a união eterna entre Cristo e a Sua noiva, a Igreja. Todos os remidos do Antigo e do Novo Testamento se assentarão à mesa e o próprio Cristo os servirá (João 17:24; Mateus 8:11).</li>
+            <li><strong>As Bodas do Cordeiro:</strong> A grande celebração que consumará a união eterna entre Cristo e a Sua noiva, a Igreja. Todos os remidos do Antigo e do Novo Testamento se assentarão à mesa e o próprio Cristo os servirá (João 17:24; Mateus 8:11; Lucas 12:37).</li>
           </ul>
         </section>
 
@@ -76,8 +76,8 @@ export default function Licao7({ onVoltar }: LicaoProps) {
           <h3>Significado e Desdobramentos da Manifestação:</h3>
           <ol className="lista-cozy">
             <li><strong>Livramento de Israel:</strong> Cristo Se revelará a Israel, salvando a nação do exército inimigo sob a regência do Anticristo. Israel centralizará suas atenções nEle e haverá pranto e quebrantamento (Zacarias 12:10).</li>
-            <li><strong>Glorificação Pública da Igreja:</strong> O mundo contemplará a Igreja que antes era espezinhada e perseguida, agora manifestada in glória com o seu Senhor.</li>
-            <li><strong>Pavor dos Ímpios:</strong> Os rebeldes entrarão em desespero absoluto, clamando aos montes que caiam sobre eles diante da manifestação da Ira do Cordeiro (Apocalipse 6:16-17).</li>
+            <li><strong>Glorificação Pública da Igreja:</strong> O mundo contemplará a Igreja que antes era espezinhada e perseguida, agora manifestada em glória com o seu Senhor.</li>
+            <li><strong>Pavor dos Ímpios:</strong> Os rebeldes entrarão em desespero absoluto, clamando aos montes que caiam sobre eles diante da manifestação da ira do Cordeiro (Apocalipse 6:16-17).</li>
             <li><strong>Vitória Sobrenatural:</strong> Cristo destruirá as forças inimigas miraculosamente pelo sopro e pela palavra que sai da Sua boca (Apocalipse 19:21). O Anticristo e o Falso Profeta serão lançados no Lago de Fogo, e Satanás será aprisionado por mil anos (Apocalipse 19:20; 20:2).</li>
           </ol>
         </section>
@@ -111,11 +111,11 @@ export default function Licao7({ onVoltar }: LicaoProps) {
           <p>
             Ao término dos mil anos, Satanás será solto por um breve período para enganar as nações, sendo finalmente 
             derrotado de forma definitiva e lançado no Lago de Fogo (Apocalipse 20:7-10). Na sequência, estabelece-se o 
-            <strong>Juízo do Trono Branco</strong>, onde Cristo atuará como o Juiz por excelência (Atos 17:31).
+            <strong> Juízo do Trono Branco</strong>, onde Cristo atuará como o Juiz por excelência (Atos 17:31).
           </p>
 
           <ul className="lista-cozy">
-            <li>Os livros de registros serão abertos, incluindo o <strong>Livro da Vida</strong>. Aquele cujo nome não for encontrado escrito ali será lançado no lago de fogo (Apocalipse 20:15).</li>
+            <li>Os livros de registros serão abertos, incluindo o <strong>Livro da Vida</strong>. Aquele cujo nome não for encontrado escrito ali será lançado no Lago de Fogo (Apocalipse 20:15).</li>
             <li>Os salvos estarão presentes e seguros da condenação eterna (Romanos 8:1).</li>
             <li>O julgamento de Deus será conduzido com absoluta retidão, justiça e imparcialidade.</li>
           </ul>

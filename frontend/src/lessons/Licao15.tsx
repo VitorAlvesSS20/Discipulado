@@ -112,7 +112,7 @@ export default function Licao15({ onVoltar }: LicaoProps) {
         <section className="licao-section">
           <h2>1. O Significado do Dízimo</h2>
           <p>
-            O termo "dízimo" provém do latim <em>decimus</em> and refere-se estritamente à <strong>décima parte (10%)</strong> de algo. Na prática cristã, é um ato regular e voluntário pelo qual o fiel, fundamentado em sua devoção, separa dez por cento de suas rendas brutas para entregar à igreja local. Esse ato expressa o reconhecimento de que Deus é o Senhor absoluto e o provedor de todas as coisas (Salmos 24:1; Ageu 2:8).
+            O termo "dízimo" provém do latim <em>decimus</em> e refere-se estritamente à <strong>décima parte (10%)</strong> de algo. Na prática cristã, é um ato regular e voluntário pelo qual o fiel, fundamentado em sua devoção, separa dez por cento de suas rendas brutas para entregar à igreja local. Esse ato expressa o reconhecimento de que Deus é o Senhor absoluto e o provedor de todas as coisas (Salmos 24:1; Ageu 2:8).
           </p>
           <p>
             Contribuir com o dízimo não se trata de uma "negociata" com o Criador, tampouco uma tentativa de comprar favores ou barganhar milagres. Significa, genuinamente, devolver uma pequena parte daquilo que a própria fonte de todo bem já nos concedeu. Quando há recusa voluntária em entregar o dízimo, o crente demonstra que ainda não compreendeu totalmente o senhorio e a bondade de Deus em suas finanças.
@@ -270,7 +270,7 @@ export default function Licao15({ onVoltar }: LicaoProps) {
                 <li><strong>R1:</strong> Dízimo significa a "décima parte" (10%) de todas as rendas, sendo um valor percentual fixo. A oferta é um valor totalmente voluntário, flexível, sem limite de quantidade ou frequência pré-estabelecida.</li>
                 <li><strong>R2:</strong> Destinava-se ao sustento da Tribo de Levi (levitas e sacerdotes), visto que eles não possuíam propriedades e heranças de terra, dedicando-se exclusivamente ao serviço do Templo e à liturgia.</li>
                 <li><strong>R3:</strong> Abraão (ao entregar o dízimo de tudo a Melquisedeque em Gênesis 14) e Jacó (ao fazer o voto de devolver o dízimo em Betel em Gênesis 28).</li>
-                <li><strong>R4:</strong> Jesus repreendeu a hipocrisia deles por priorizarem pequenos dízimos botânicos enquanto esqueciam a justiça, a fé e a misericórdia. O Senhor afirmou que eles deveriam praticar essas virtudes sem, contudo, deixar de dízimar.</li>
+                <li><strong>R4:</strong> Jesus repreendeu a hipocrisia deles por priorizarem pequenos dízimos botânicos enquanto esqueciam a justiça, a fé e a misericórdia. O Senhor afirmou que eles deveriam praticar essas virtudes sem, contudo, deixar de dizimar.</li>
                 <li><strong>R5:</strong> A oferta deve ser entregue com voluntariedade (decidida previamente no coração), com alegria e entusiasmo espiritual (não por tristeza ou obrigação), e de forma proporcional à sua real condição financeira.</li>
               </ul>
             </div>

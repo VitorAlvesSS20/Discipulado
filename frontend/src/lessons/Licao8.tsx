@@ -38,7 +38,7 @@ export default function Licao8({ onVoltar }: LicaoProps) {
           }
         }
       } catch (error) {
-        console.error(error);
+        console.error('Erro ao carregar respostas:', error);
       }
     };
 
@@ -77,7 +77,7 @@ export default function Licao8({ onVoltar }: LicaoProps) {
 
       exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao salvar respostas:', error);
       exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
     } finally {
       setSalvando(false);
@@ -118,7 +118,7 @@ export default function Licao8({ onVoltar }: LicaoProps) {
           </p>
           <p>
             Quando a igreja primitiva nasceu no dia de Pentecostes (por volta do ano 30 d.C., conforme registrado em Atos 2), 
-            dos discípulos ainda não possuíam esse codinome. Somente por volta do ano 43 d.C., na cidade de 
+            os discípulos ainda não possuíam esse codinome. Somente por volta do ano 43 d.C., na cidade de 
             <strong> Antioquia</strong>, é que os seguidores de Jesus foram chamados pela primeira vez de "Cristãos" (Atos 11:26).
           </p>
 
@@ -160,7 +160,7 @@ export default function Licao8({ onVoltar }: LicaoProps) {
 
           <p>
             Apesar de existirem inúmeras denominações históricas e contemporâneas (como Assembleia de Deus, Batista, Quadrangular, etc.), 
-            la Igreja de Cristo em essência é <strong>única</strong> (Efésios 4:4), composta por milhares de membros espalhados por todo o mundo, 
+            a Igreja de Cristo em essência é <strong>única</strong> (Efésios 4:4), composta por milhares de membros espalhados por todo o mundo, 
             incluindo aqueles que já dormiram no Senhor na esperança da ressurreição (1 Tessalonicenses 4:13-17).
           </p>
         </section>

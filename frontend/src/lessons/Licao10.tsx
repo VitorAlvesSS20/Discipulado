@@ -38,7 +38,7 @@ export default function Licao10({ onVoltar }: LicaoProps) {
           }
         }
       } catch (error) {
-        console.error(error);
+        console.error('Erro ao carregar respostas:', error);
       }
     };
 
@@ -77,7 +77,7 @@ export default function Licao10({ onVoltar }: LicaoProps) {
 
       exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao salvar respostas:', error);
       exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
     } finally {
       setSalvando(false);
@@ -119,14 +119,14 @@ export default function Licao10({ onVoltar }: LicaoProps) {
             <strong> A oração não é um monólogo, e sim um diálogo</strong> (Jeremias 33:3). Quando oramos, conversamos com Deus, que se inclina para nos ouvir e nos responder.
           </p>
           <p>
-            É falar com o Pai, é adoração, é cultuar. Ela funciona para o crente como uma chave que abre as portas dos tesouros celestiais que nos foram oferecidos por meio do sacrifício de Jesus Cristo.
+            É falar com o Pai, é adoração, é prestar culto. Ela funciona para o crente como uma chave que abre as portas dos tesouros celestiais que nos foram oferecidos por meio do sacrifício de Jesus Cristo.
           </p>
 
           <h3>Como deve ser a oração?</h3>
           <ul className="lista-cozy">
             <li><strong>Sincera:</strong> Feita de coração limpo e verdadeiro (Hebreus 10:22).</li>
             <li><strong>Com Fé:</strong> Dirigida com a certeza de que Ele nos ouve (Hebreus 11:6; Mateus 21:22).</li>
-            <li><strong>No Nome de Jesus:</strong> Pautada e respaldada na autoridade do Filho (João 16:23-24).</li>
+            <li><strong>No nome de Jesus:</strong> Pautada e respaldada na autoridade do Filho (João 16:23-24).</li>
           </ul>
 
           <h3>Tipos de Orações Existentes:</h3>
@@ -159,14 +159,14 @@ export default function Licao10({ onVoltar }: LicaoProps) {
 
           <div className="nota-teologica">
             <h3>As Diretrizes da Oração Dominical (O Pai Nosso):</h3>
-            <p>Jesus estabeleceu um roteiro equilibrado contendo os seguintes pilares fundamentais:</p>
+            <p>Jesus established um roteiro equilibrado contendo os seguintes pilares fundamentais:</p>
             <ol>
-              <li><strong>Adoração:</strong> <em>"Pai nosso que estás no céu"</em> (v. 9)</li>
+              <li><strong>Adoração:</strong> <em>"Pai nosso, que estás nos céus"</em> (v. 9)</li>
               <li><strong>Reverência:</strong> <em>"Santificado seja o teu nome"</em> (v. 9)</li>
               <li><strong>Súplicas:</strong> <em>"Venha o teu reino"</em> (v. 10)</li>
               <li><strong>Rogos:</strong> <em>"Seja feita a tua vontade"</em> (v. 10)</li>
               <li><strong>Provisão:</strong> <em>"O pão nosso de cada dia dai-nos hoje"</em> (v. 11)</li>
-              <li><strong>Perdão:</strong> <em>"Perdoe as nossas dívidas"</em> (v. 12)</li>
+              <li><strong>Perdão:</strong> <em>"Perdoa-nos as nossas dívidas"</em> (v. 12)</li>
               <li><strong>Amor ao próximo:</strong> <em>"Assim como perdoamos os nossos devedores"</em> (v. 12)</li>
               <li><strong>Proteção:</strong> <em>"Não nos deixes cair em tentação"</em> (v. 13)</li>
               <li><strong>Livramento:</strong> <em>"Livra-nos do mal"</em> (v. 13)</li>
