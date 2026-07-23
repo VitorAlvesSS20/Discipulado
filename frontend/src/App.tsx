@@ -9,6 +9,7 @@ import { Auth } from './Auth';
 import { Perfil } from './Perfil';
 import './App.css';
 import seloConcluido from './assets/concluido.png';
+import missaoPng from './assets/missao.png';
 
 import Licao1 from './lessons/Licao1';
 import Licao2 from './lessons/Licao2';
@@ -143,6 +144,7 @@ export default function App() {
           }
         } catch (error) {
           console.error(error);
+          toast.error('Erro ao tentar carregar o progresso.');
         }
       } else {
         setLicoesConcluidas({});
@@ -165,8 +167,10 @@ export default function App() {
           setLicoesConcluidas(updatedProgress);
           try {
             await setDoc(doc(db, 'users_progress', user.uid), { [currentLessonSlug]: true }, { merge: true });
+            toast.success('Progresso salvo!');
           } catch (error) {
             console.error('Erro ao salvar progresso:', error);
+            toast.error('Erro ao salvar o progresso da lição.');
           }
         }, 40000); 
       }
@@ -290,6 +294,18 @@ export default function App() {
 
           {currentView === 'home' && (
             <div className="home-view">
+              <section className="church-intro-section">
+                <img src={missaoPng} alt="Missão Fogo e Glória" className="church-logo" />
+                <div className="church-text-block">
+                  <h3>Igreja Missão Fogo e Glória</h3>
+                  <p className="church-type">Uma Igreja Viva e Missionária</p>
+                  <p className="church-tagline">"Gente cuidando de gente"</p>
+                  <p className="church-description">
+                    Somos uma comunidade acolhedora dedicada a pregar o Evangelho, promover a comunhão cristã e edificar famílias através da Palavra de Deus e da ação do Espírito Santo.
+                  </p>
+                </div>
+              </section>
+
               <section className="instrucoes-box">
                 <h4>Instruções de Estudo Importantes:</h4>
                 <p>
@@ -308,7 +324,7 @@ export default function App() {
                 <p>
                   É com prazer que disponibilizamos a você este material de estudo da Bíblia, 
                   pois é de suma importância que tenhamos o conhecimento acerca de Deus e dos 
-                  aspect gerais relacionados à sua obra.
+                  aspectos gerais relacionados à sua obra.
                 </p>
                 <p>
                   Nestas lições estudaremos alguns princípios básicos a respeito do que nos diz as 
@@ -360,7 +376,28 @@ export default function App() {
         </main>
 
         <footer className="main-footer">
-          <p>&copy; {new Date().getFullYear()} Discipulado Cristão. Todos os direitos reservados.</p>
+          <div className="footer-content">
+            <div className="footer-info">
+              <h4 className="footer-title">Igreja Missão Fogo e Glória</h4>
+              <p className="footer-address">
+                 <strong>Endereço:</strong> Rua Treze de Maio, 2444 — Canindé - CE
+              </p>
+              <p className="footer-social">
+                 <strong>Instagram:</strong>{' '}
+                <a 
+                  href="https://www.instagram.com/missaofogoegloriacaninde?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="footer-link"
+                >
+                  @missaofogoegloriacaninde
+                </a>
+              </p>
+            </div>
+            <p className="footer-copyright">
+              &copy; {new Date().getFullYear()} Discipulado Cristão. Todos os direitos reservados.
+            </p>
+          </div>
         </footer>
       </div>
     );
@@ -387,115 +424,68 @@ export default function App() {
         .custom-cafe-progress {
           background: #8d6e63 !important;
         }
+
+        .church-description {
+          font-family: var(--font-sans);
+          font-size: 0.95rem;
+          line-height: 1.6;
+          color: var(--text-main);
+          margin-top: 8px;
+        }
         
-        .header-content {
-          position: relative;
+        .footer-content {
           display: flex;
           flex-direction: column;
           align-items: center;
+          gap: 15px;
+          max-width: 1100px;
+          margin: 0 auto;
         }
 
-        .hamburger-btn {
-          display: none;
-          flex-direction: column;
-          justify-content: space-between;
-          width: 30px;
-          height: 21px;
-          background: transparent;
-          border: none;
-          cursor: pointer;
-          padding: 0;
-          z-index: 1001;
-          position: absolute;
-          top: 10px;
-          right: 10px;
-        }
-
-        .hamburger-line {
-          width: 30px;
-          height: 3px;
-          background-color: var(--bg-primary);
-          transition: all 0.3s linear;
-          transform-origin: 1px;
-        }
-
-        .hamburger-btn.open .hamburger-line:nth-child(1) {
-          transform: rotate(45deg);
-        }
-
-        .hamburger-btn.open .hamburger-line:nth-child(2) {
-          opacity: 0;
-          transform: translateX(20px);
-        }
-
-        .hamburger-btn.open .hamburger-line:nth-child(3) {
-          transform: rotate(-45deg);
-        }
-
-        .header-menu-container {
+        .footer-info {
           display: flex;
-          gap: 10px;
-          position: absolute;
-          top: 20px;
-          right: 20px;
+          flex-direction: column;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.95rem;
         }
 
-        .menu-btn-profile {
-          background: var(--accent);
-          border: 1px solid var(--border-color);
-          color: white;
-          padding: 6px 14px;
-          cursor: pointer;
-          borderRadius: 4px;
-          fontSize: '0.8rem';
-          fontWeight: 'bold';
-          boxShadow: '2px 2px 0px var(--border-color)';
+        .footer-title {
+          font-family: var(--font-serif);
+          font-size: 1.2rem;
+          margin: 0 0 4px 0;
+          color: var(--accent);
+          letter-spacing: 1px;
         }
 
-        .menu-btn-logout {
-          background: transparent;
-          border: 1px solid var(--bg-primary);
+        .footer-address, .footer-social {
+          margin: 0;
+          line-height: 1.5;
+        }
+
+        .footer-link {
           color: var(--bg-primary);
-          padding: 6px 12px;
-          cursor: pointer;
-          borderRadius: 4px;
-          fontSize: '0.8rem';
-          fontWeight: 'bold';
+          text-decoration: underline;
+          font-weight: 600;
+          transition: color 0.2s ease;
+        }
+
+        .footer-link:hover {
+          color: var(--accent);
+        }
+
+        .footer-copyright {
+          margin: 15px 0 0 0;
+          border-top: 1px solid rgba(255, 255, 255, 0.2);
+          padding-top: 15px;
+          width: 100%;
+          font-size: 0.85rem;
+          opacity: 0.9;
         }
 
         @media (max-width: 768px) {
-          .hamburger-btn {
-            display: flex;
-          }
-
-          .header-menu-container {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 50px;
-            right: 10px;
-            background-color: var(--primary-light);
-            border: 2px solid var(--border-color);
-            padding: 15px;
-            border-radius: 4px;
-            box-shadow: 4px 4px 0px var(--border-color);
-            z-index: 1000;
-            gap: 12px;
-            width: 160px;
-          }
-
-          .header-menu-container.active {
-            display: flex;
-          }
-
-          .menu-btn-profile, .menu-btn-logout {
-            width: 100%;
+          .footer-info {
             text-align: center;
-            box-sizing: border-box;
-          }
-          
-          .menu-btn-logout {
-            background: rgba(255, 255, 255, 0.1);
           }
         }
       `}</style>
