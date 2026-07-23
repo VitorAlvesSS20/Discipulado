@@ -70,7 +70,7 @@ export default function Licao2({ onVoltar }: LicaoProps) {
         }
       }, { merge: true });
 
-      toast.success('Respostas salvas com sucesso! ');
+      toast.success('Respostas salvas com sucesso!');
     } catch (error) {
       console.error('Erro ao salvar respostas:', error);
       toast.error('Erro ao salvar as respostas. Tente novamente.');
@@ -105,8 +105,8 @@ export default function Licao2({ onVoltar }: LicaoProps) {
           </p>
           <p>
             Teologicamente, definimos Deus como um <strong>Ser supremo, infinito, autoexistente</strong> (que existe por si mesmo, 
-            sem ter sido criado), Criador e Sustentador de absolutamente todas as coisas que há no universo, sejam elas 
-            visíveis ou invisíveis (Gênesis 1:1; Colossenses 1:16). A natureza essencial de Sua essência é puramente 
+            sem ter sido criado), Criador e Sustentador de absolutamente todas as coisas no universo, sejam elas 
+            visíveis ou invisíveis (Gênesis 1:1; Colossenses 1:16). A Sua essência é puramente 
             <strong> espiritual</strong> (João 4:24).
           </p>
 
@@ -125,7 +125,7 @@ export default function Licao2({ onVoltar }: LicaoProps) {
           <p>
             As Escrituras declaram de forma categórica que <strong>Deus é único</strong> (Deuteronômio 6:4). No entanto, este Deus único 
             revela-se eternamente em três Pessoas distintas: o <strong>Pai</strong> (Jeová), o <strong>Filho</strong> (Jesus Cristo) e o 
-            <strong> Espírito Santo</strong> (o Consolador). A essa união e distinção na Divindade cognominamos de <strong>Trindade</strong>.
+            <strong> Espírito Santo</strong> (o Consolador). A essa união e distinção na Divindade denominamos <strong>Trindade</strong>.
           </p>
 
           <div className="licao-imagem-wrapper">
@@ -140,13 +140,13 @@ export default function Licao2({ onVoltar }: LicaoProps) {
             Para compreendermos didaticamente a Trindade, podemos analisar a figura geométrica de um <strong>triângulo equilátero</strong>:
           </p>
           <ul className="lista-cozy">
-            <li><strong>Peça Única:</strong> O triângulo é uma só figura geométrica inteira.</li>
+            <li><strong>Figura Única:</strong> O triângulo é uma só figura geométrica inteira.</li>
             <li><strong>Três Lados Distintos:</strong> Possui exatamente três lados que formam sua estrutura.</li>
-            <li><strong>Mesmas Dimensões:</strong> Todos os lados possuem rigorosamente o mesmo tamanho e peso.</li>
+            <li><strong>Mesmas Dimensões:</strong> Todos os lados possuem rigorosamente a mesma medida e proporção.</li>
           </ul>
 
           <p>
-            De forma análoga, Deus é único (o triângulo), manifestando-se em três representações divinas (os lados): Pai, Filho e Espírito Santo. 
+            De forma análoga, Deus é único (o triângulo), subsistindo em três Pessoas divinas (os lados): Pai, Filho e Espírito Santo. 
             Cada uma das Pessoas possui as mesmíssimas características, dignidade e atributos divinos (dimensões iguais). 
             Eles cooperam perfeitamente em unidade (Mateus 28:19; 2 Coríntios 13:14; 1 João 5:7).
           </p>
@@ -164,7 +164,7 @@ export default function Licao2({ onVoltar }: LicaoProps) {
           <div className="pilares-grid">
             <div className="pilar-card">
               <h4>Onipotência</h4>
-              <p>Seu poder é absoluto e não conhece limites morais ou físicos (Salmos 91:1; Mateus 28:18).</p>
+              <p>Seu poder é absoluto, supremo e ilimitado (Salmos 91:1; Mateus 28:18).</p>
             </div>
             <div className="pilar-card">
               <h4>Onipresença</h4>
@@ -172,7 +172,7 @@ export default function Licao2({ onVoltar }: LicaoProps) {
             </div>
             <div className="pilar-card">
               <h4>Onisciência</h4>
-              <p>Conhecimento total e pleno de todas as coisas, passadas, presentes e futuras (Salmos 139:1-6).</p>
+              <p>Conhecimento total e pleno de todas as coisas: passadas, presentes e futuras (Salmos 139:1-6).</p>
             </div>
           </div>
 
@@ -237,7 +237,7 @@ export default function Licao2({ onVoltar }: LicaoProps) {
 
           <div className="quadro-negro-box">
             <p>
-              "Portanto, Deus é maravilhoso e para conseguir descrevê-lo verdadeiramente é necessário experimentá-lo. 
+              "Portanto, Deus é maravilhoso e, para conseguir descrevê-Lo verdadeiramente, é necessário experimentá-Lo. 
               Não fique apenas na teoria dos livros: busque ter a sua própria experiência pessoal com o Criador!"
             </p>
             <span className="autor-fonte">— Fundamento do Discipulado</span>
@@ -314,9 +314,9 @@ export default function Licao2({ onVoltar }: LicaoProps) {
             <div className="gabarito-box">
               <h4>Gabarito das respostas:</h4>
               <ul>
-                <li><strong>R1:</strong> Deus é um ser supremo, infinito, existente por si mesmo, criador e sustentador de todas as coisas visíveis e invisíveis. Sua natureza é espiritual.</li>
-                <li><strong>R2:</strong> É a verdade de que Deus é único, mas se apresenta e subsiste eternamente in três representações ou Pessoas: Pai (Jeová), Filho (Jesus Cristo) e Espírito Santo.</li>
-                <li><strong>R3:</strong> O triângulo equilátero (peça única com três lados de dimensões idênticas).</li>
+                <li><strong>R1:</strong> Deus é um Ser supremo, infinito, existente por si mesmo, criador e sustentador de todas as coisas visíveis e invisíveis. Sua natureza é espiritual.</li>
+                <li><strong>R2:</strong> É a verdade de que Deus é único, mas se apresenta e subsiste eternamente em três Pessoas distintas: Pai (Jeová), Filho (Jesus Cristo) e Espírito Santo.</li>
+                <li><strong>R3:</strong> O triângulo equilátero (figura única com três lados de dimensões idênticas).</li>
                 <li><strong>R4:</strong> Onipotência, Onipresença, Onisciência, Eternidade ou Imutabilidade.</li>
                 <li><strong>R5:</strong> Amor, Bondade, Misericórdia, Compaixão, Paciência, Verdade, Fidelidade ou Justiça.</li>
               </ul>

@@ -119,14 +119,13 @@ export default function Licao13({ onVoltar }: LicaoProps) {
           </p>
           <p>
             Embora dicionários comuns definam o batismo como um sacramento para afastar o pecado original, o significado da 
-            palavra original grega (<em>baptizo</em>) é <strong>mergulhar ou imergir</strong>. 
+            palavra original grega (<em>baptizo</em>) é <strong>mergulhar ou imergir</strong>.
           </p>
           
           <div className="licao-imagem-wrapper">
             <img src={imagemBatismo} alt="Simbolismo do Batismo em Águas" className="licao-imagem" />
           </div>
 
-          {/* Corrigido aqui: adicionado o caractere '<' omitido anteriormente */}
           <blockquote className="doutrina-fundamental-box">
             <strong>Doutrina Fundamental:</strong> O batismo não tem poder de salvar (a salvação vem unicamente pela graça mediante a fé, conforme João 3:16 e Atos 4:12). Se um crente, por circunstâncias imprevistas, falecer antes de descer às águas, sua posição de salvo permanece inalterada. Contudo, negligenciar voluntariamente o batismo é desobedecer a uma ordem direta de Jesus (Marcos 16:16).
           </blockquote>
@@ -266,7 +265,7 @@ export default function Licao13({ onVoltar }: LicaoProps) {
               <h4>Gabarito das respostas:</h4>
               <ul>
                 <li><strong>R1:</strong> Significa "mergulhar" ou "imergir". Ele exige a imersão completa do corpo em um volume de água que cubra totalmente o candidato.</li>
-                <li><strong>R2:</strong> Não, o batismo não salva. A salvação é obtida pela graça mediante a fé em Jesus. O batismo serves como uma profissão pública dessa fé e obediência já iniciadas no coração.</li>
+                <li><strong>R2:</strong> Não, o batismo não salva. A salvação é obtida pela graça mediante a fé em Jesus. O batismo serve como uma profissão pública dessa fé e obediência já iniciadas no coração.</li>
                 <li><strong>R3:</strong> A morte simboliza o rompimento com o pecado do mundo; o sepultamento representa a renúncia total à vida velha; a ressurreição aponta para uma nova vida em sujeição e obediência a Cristo.</li>
                 <li><strong>R4:</strong> Porque demonstra que o batismo exige consciência plena, arrependimento pessoal e decisão de fé voluntária, capacidades que um bebê ou criança inconsciente não possuem.</li>
                 <li><strong>R5:</strong> Arrependimento sincero, crer em Jesus Cristo de inteiro coração e assimilar os pontos elementares e compromissos da doutrina bíblica local.</li>

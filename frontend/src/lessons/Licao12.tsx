@@ -32,7 +32,7 @@ export default function Licao12({ onVoltar }: LicaoProps) {
               q1: salvas['1) Qual é o conceito correto de "culto" segundo a Palavra de Deus e qual o erro comum que as pessoas cometem?'] || '',
               q2: salvas['2) Quais são os cinco elementos básicos que compõem a liturgia das Assembleias de Deus no Brasil?'] || '',
               q3: salvas['3) De acordo com João 4:23-24, qual é a principal exigência estabelecida para os verdadeiros adoradores?'] || '',
-              q4: salvas['4) O que a expression bíblica "Guarda o teu pé quando entrares na casa de Deus" nos ensina na prática?'] || '',
+              q4: salvas['4) O que a expressão bíblica "Guarda o teu pé quando entrares na casa de Deus" nos ensina na prática?'] || '',
               q5: salvas['5) Onde e por quanto tempo a adoração ao Senhor continuará acontecendo, segundo o livro de Apocalipse?'] || ''
             });
           }
@@ -63,7 +63,7 @@ export default function Licao12({ onVoltar }: LicaoProps) {
       '1) Qual é o conceito correto de "culto" segundo a Palavra de Deus e qual o erro comum que as pessoas cometem?': respostas.q1,
       '2) Quais são os cinco elementos básicos que compõem a liturgia das Assembleias de Deus no Brasil?': respostas.q2,
       '3) De acordo com João 4:23-24, qual é a principal exigência estabelecida para os verdadeiros adoradores?': respostas.q3,
-      '4) O que a expression bíblica "Guarda o teu pé quando entrares na casa de Deus" nos ensina na prática?': respostas.q4,
+      '4) O que a expressão bíblica "Guarda o teu pé quando entrares na casa de Deus" nos ensina na prática?': respostas.q4,
       '5) Onde e por quanto tempo a adoração ao Senhor continuará acontecendo, segundo o livro de Apocalipse?': respostas.q5,
     };
 

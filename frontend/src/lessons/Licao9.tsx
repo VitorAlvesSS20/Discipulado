@@ -33,12 +33,12 @@ export default function Licao9({ onVoltar }: LicaoProps) {
               q2: salvas['2) Quais foram as duas características marcantes atribuídas por Jesus aos Seus discípulos em Mateus 5:13-16?'] || '',
               q3: salvas['3) O que a metáfora da "luz" representa especificamente na vida prática do crente?'] || '',
               q4: salvas['4) O que o "sal" simboliza na vida do cristão e quais as suas duas propriedades descritas na lição?'] || '',
-              q5: salvas['5) De que forma sutil o diabo tem agido nestes dias modernos para tentar neutralizar o cristão?'] || ''
+              q5: salvas['5) De que forma sutil o Diabo tem agido nestes dias modernos para tentar neutralizar o cristão?'] || ''
             });
           }
         }
       } catch (error) {
-        console.error(error);
+        console.error('Erro ao carregar respostas:', error);
       }
     };
 
@@ -64,7 +64,7 @@ export default function Licao9({ onVoltar }: LicaoProps) {
       '2) Quais foram as duas características marcantes atribuídas por Jesus aos Seus discípulos em Mateus 5:13-16?': respostas.q2,
       '3) O que a metáfora da "luz" representa especificamente na vida prática do crente?': respostas.q3,
       '4) O que o "sal" simboliza na vida do cristão e quais as suas duas propriedades descritas na lição?': respostas.q4,
-      '5) De que forma sutil o diabo tem agido nestes dias modernos para tentar neutralizar o cristão?': respostas.q5,
+      '5) De que forma sutil o Diabo tem agido nestes dias modernos para tentar neutralizar o cristão?': respostas.q5,
     };
 
     try {
@@ -77,7 +77,7 @@ export default function Licao9({ onVoltar }: LicaoProps) {
 
       exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao salvar respostas:', error);
       exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
     } finally {
       setSalvando(false);
@@ -116,7 +116,7 @@ export default function Licao9({ onVoltar }: LicaoProps) {
             <em> "Porque noutro tempo éreis trevas, mas agora sois luz no Senhor; andai como filhos da luz"</em>. Cognominamos essa atitude prática de <strong>Conduta Cristã</strong>.
           </p>
           <p>
-            A conduta cristã fala-nos do comportamento que o Cristão deve exercer em todos os aspectos da sua vida: 
+            A conduta cristã fala-nos do comportamento que o cristão deve exercer em todos os aspectos da sua vida: 
             <strong> social, pública, moral, religiosa e espiritual</strong>. O grande objetivo é fazer com que o nome do Senhor Jesus Cristo seja glorificado através de nossas atitudes (Salmos 103:1-2; 1 Pedro 1:13-16). Em suma, a conduta cristã se resume em <strong>refletirmos o caráter de Cristo</strong> para o mundo.
           </p>
         </section>
@@ -161,7 +161,7 @@ export default function Licao9({ onVoltar }: LicaoProps) {
         <section className="licao-section">
           <h2>3. A Imutabilidade da Palavra contra as Sutilezas do Inimigo</h2>
           <p>
-            O diabo (nosso adversário espiritual) tem agido com extrema sutileza nestes últimos dias. O seu principal desejo é desmoralizar a Igreja e apagar o testemunho dos crentes. 
+            O Diabo (nosso adversário espiritual) tem agido com extrema sutileza nestes últimos dias. O seu principal desejo é desmoralizar a Igreja e apagar o testemunho dos crentes. 
           </p>
           <p>
             Ele costuma fermentar e espalhar a ideia de que, por estarmos vivendo em um mundo moderno e globalizado, certas práticas que antes eram tidas como pecado, hoje já não fazem mal algum. 
@@ -173,7 +173,7 @@ export default function Licao9({ onVoltar }: LicaoProps) {
               A Palavra de Deus é eterna e as Suas doutrinas morais são preceitos imutáveis que não se moldam às eras ou modismos da sociedade.
             </p>
             <p>
-              <em>"Passará o céu e a terra, mas as minhas palavras não passarão."</em> — <strong>Mateus 24:35</strong> (Ver também Salmos 119:44, 142).
+              <em>"Passará o céu e a Terra, mas as minhas palavras não passarão."</em> — <strong>Mateus 24:35</strong> (Ver também Salmos 119:44, 142).
             </p>
           </div>
 
@@ -240,7 +240,7 @@ export default function Licao9({ onVoltar }: LicaoProps) {
           </div>
 
           <div className="form-group">
-            <label>5) De que forma sutil o diabo tem agido nestes dias modernos para tentar neutralizar o cristão?</label>
+            <label>5) De que forma sutil o Diabo tem agido nestes dias modernos para tentar neutralizar o cristão?</label>
             <input 
               type="text" 
               placeholder="..." 
@@ -270,7 +270,7 @@ export default function Licao9({ onVoltar }: LicaoProps) {
             <div className="gabarito-box">
               <h4>Gabarito das respostas:</h4>
               <ul>
-                <li><strong>R1:</strong> É o comportamento santo que o Cristão deve exercer em todas as esferas da vida (social, pública, moral, religiosa e espiritual), visando refletir o caráter de Cristo e glorificar o nome do Senhor.</li>
+                <li><strong>R1:</strong> É o comportamento santo que o cristão deve exercer em todas as esferas da vida (social, pública, moral, religiosa e espiritual), visando refletir o caráter de Cristo e glorificar o nome do Senhor.</li>
                 <li><strong>R2:</strong> "Sal da terra" e "Luz do mundo".</li>
                 <li><strong>R3:</strong> Representa o nosso testemunho público diário, que deve resplandecer diante dos homens através de boas obras.</li>
                 <li><strong>R4:</strong> Simboliza a graça de Deus. Suas duas propriedades são: 1) Temperar (equilíbrio e bom relacionamento com o próximo) e 2) Conservar (manter a comunhão com Cristo e o corpo em santidade).</li>

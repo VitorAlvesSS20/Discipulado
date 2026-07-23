@@ -143,7 +143,7 @@ export default function Licao17({ onVoltar }: LicaoProps) {
           <h2>3. Análise de Seitas de Grande Vulto (Parte 2)</h2>
 
           <h3>IV. Testemunhas de Jeová</h3>
-          <p><strong>Origem:</strong> Fundada por Charles Taze Russel em 1872 (EUA), com fortes influências do adventismo inicial.</p>
+          <p><strong>Origem:</strong> Fundada por Charles Taze Russell em 1872 (EUA), com fortes influências do adventismo inicial.</p>
           <p><strong>Erros Doutrinários:</strong> Rejeição à Doutrina da Trindade (alegam que veio de Satanás), negação da divindade e eternidade de Cristo, afirmação de que o inferno não existe e limite fixo de apenas 144 mil salvos no céu.</p>
           <p><strong>Refutação Bíblica:</strong> A Trindade é evidente nas Escrituras (Mateus 3:16-17; 28:19). Jesus é eterno, Alfa e Ômega (Apocalipse 22:13). O inferno é um lugar real de suplício eterno (Mateus 5:22; 2 Pedro 2:4). Os 144 mil descritos em Apocalipse 7 são judeus selados, enquanto os salvos formam uma multidão incontável de todas as nações (Apocalipse 7:9).</p>
 
@@ -155,10 +155,10 @@ export default function Licao17({ onVoltar }: LicaoProps) {
           <div className="nota-teologica">
             <h3>Outros Movimentos Menores Refutados:</h3>
             <ul>
-              <li><strong>Bahaismo:</strong> Defende o panteísmo ("tudo é Deus"). A Bíblia ensina que Deus é o Criador transcendente e pessoal, e o pecado é uma realidade que afasta o homem de Deus (Romanos 3:23).</li>
+              <li><strong>Baha'ísmo:</strong> Defende o panteísmo ("tudo é Deus"). A Bíblia ensina que Deus é o Criador transcendente e pessoal, e o pecado é uma realidade que afasta o homem de Deus (Romanos 3:23).</li>
               <li><strong>Ciência Cristã:</strong> Afirma que Deus é apenas um princípio impessoal. A Bíblia mostra que Deus possui personalidade, amor e vontade própria (João 4:24).</li>
               <li><strong>Evolucionismo:</strong> Declara que o homem descende biologicamente do macaco. A Bíblia afirma categoricamente a criação divina direta do homem (Gênesis 2:7).</li>
-              <li><strong>Seicho-no-iê:</strong> Mistura Budismo e Xintoísmo, alegando que o pecado e as doenças são ilusões da mente. A Bíblia relata a dureza real do pecado e a necessidade de arrependimento (Ezequiel 18:20).</li>
+              <li><strong>Seicho-No-Ie:</strong> Mistura Budismo e Xintoísmo, alegando que o pecado e as doenças são ilusões da mente. A Bíblia relata a dureza real do pecado e a necessidade de arrependimento (Ezequiel 18:20).</li>
             </ul>
           </div>
         </section>

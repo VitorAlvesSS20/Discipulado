@@ -156,7 +156,6 @@ export default function Licao14({ onVoltar }: LicaoProps) {
             <li><strong>Futuro (Esperança):</strong> Aponta diretamente para uma refeição gloriosa e futura na presença de Deus: as Bodas do Cordeiro (Mateus 26:29; Apocalipse 19:9).</li>
           </ul>
           
-          {/* Corrigido aqui: adicionado o caractere '<' omitido anteriormente */}
           <blockquote className="clima-celebracao-box">
             <strong>Clima de Celebração:</strong> A Ceia não deve ser um momento de lamento fúnebre ou desespero alimentado por medo. É um momento solene e reverente, mas de intensa <strong>festa e alegria espiritual</strong> pelo livramento e vitória garantidos pelo sangue de Cristo!
           </blockquote>

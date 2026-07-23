@@ -26,13 +26,12 @@ export default function Licao4({ onVoltar }: LicaoProps) {
 
         if (docSnap.exists()) {
           const data = docSnap.data();
-          // ALTERADO: Mudado de 'licao-4' para 'o-espirito-santo'
           if (data.respostasQuestionarios && data.respostasQuestionarios['o-espirito-santo']) {
             const salvas = data.respostasQuestionarios['o-espirito-santo'];
             setRespostas({
               q1: salvas['1) Cite três evidências bíblicas ou características que provam que o Espírito Santo é uma Pessoa e não uma força da natureza:'] || '',
-              q2: salvas['2) Qual é a missão prioritária do Espírito Santo atualmente na terra em relação ao mundo?'] || '',
-              q3: salvas['3) Quais são os 7 símbolos bíblicos atribuídos ao Espírito Santo mencionado nesta lição?'] || '',
+              q2: salvas['2) Qual é a missão prioritária do Espírito Santo atualmente na Terra em relação ao mundo?'] || '',
+              q3: salvas['3) Quais são os 7 símbolos bíblicos atribuídos ao Espírito Santo mencionados nesta lição?'] || '',
               q4: salvas['4) Qual é a diferença prática entre a experiência do "Batismo com o Espírito Santo" e a "Plenitude do Espírito Santo"?'] || '',
               q5: salvas['5) O que se entende por "blasfêmia contra o Espírito Santo" segundo o contexto bíblico apresentado?'] || ''
             });
@@ -62,8 +61,8 @@ export default function Licao4({ onVoltar }: LicaoProps) {
 
     const payloadRespostas = {
       '1) Cite três evidências bíblicas ou características que provam que o Espírito Santo é uma Pessoa e não uma força da natureza:': respostas.q1,
-      '2) Qual é a missão prioritária do Espírito Santo atualmente na terra em relação ao mundo?': respostas.q2,
-      '3) Quais são os 7 símbolos bíblicos atribuídos ao Espírito Santo mencionado nesta lição?': respostas.q3,
+      '2) Qual é a missão prioritária do Espírito Santo atualmente na Terra em relação ao mundo?': respostas.q2,
+      '3) Quais são os 7 símbolos bíblicos atribuídos ao Espírito Santo mencionados nesta lição?': respostas.q3,
       '4) Qual é a diferença prática entre a experiência do "Batismo com o Espírito Santo" e a "Plenitude do Espírito Santo"?': respostas.q4,
       '5) O que se entende por "blasfêmia contra o Espírito Santo" segundo o contexto bíblico apresentado?': respostas.q5,
     };
@@ -72,7 +71,7 @@ export default function Licao4({ onVoltar }: LicaoProps) {
       const docRef = doc(db, 'users_progress', user.uid);
       await setDoc(docRef, {
         respostasQuestionarios: {
-          'o-espirito-santo': payloadRespostas // ALTERADO: Mudado de 'licao-4' para 'o-espirito-santo'
+          'o-espirito-santo': payloadRespostas
         }
       }, { merge: true });
 
@@ -113,13 +112,13 @@ export default function Licao4({ onVoltar }: LicaoProps) {
         <section className="licao-section">
           <h2>1. Quem é o Espírito Santo?</h2>
           <p>
-            Antes de Jesus ser assunto aos céus, disse aos seus discípulos que não os deixaria 
-            órfãos, antes, enviaria o Espírito Santo, para estar conosco e habitar em nossos corações 
-            (João 14:18). Portanto, o Espírito Santo é o <strong>"substituto" de Cristo na terra</strong> (João 14:16).
+            Antes de Jesus ser assunto ao céu, disse aos Seus discípulos que não os deixaria 
+            órfãos; antes, enviaria o Espírito Santo para estar conosco e habitar em nossos corações 
+            (João 14:18). Portanto, o Espírito Santo é o <strong>"substituto" de Cristo na Terra</strong> (João 14:16).
           </p>
           <p>
             Muitos pensam equivocadamente que o Espírito Santo é apenas uma força ativa da natureza ou um produto do 
-            pentecostalismo. No entanto, a Bíblia o apresenta claramente como uma <strong>Pessoa</strong>:
+            pentecostalismo. No entanto, a Bíblia O apresenta claramente como uma <strong>Pessoa</strong>:
           </p>
 
           <ul className="lista-cozy">
@@ -141,9 +140,9 @@ export default function Licao4({ onVoltar }: LicaoProps) {
           </div>
 
           <p>
-            Atualmente, o Espírito Santo está na terra, habitando no coração de todos os que 
-            receberam Cristo Jesus como seu salvador (João 14:17). Sua missão prioritária é <strong>convencer o 
-            mundo do pecado, da justiça e do juízo</strong> (João 16:8-11). É Éle quem nos capacita para 
+            Atualmente, o Espírito Santo está na Terra, habitando no coração de todos os que 
+            receberam Cristo Jesus como seu Salvador (João 14:17). Sua missão prioritária é <strong>convencer o 
+            mundo do pecado, da justiça e do juízo</strong> (João 16:8-11). É Ele quem nos capacita para 
             pregarmos o Evangelho (Lucas 12:12), nos ajuda em nossas fraquezas e intercede por nós 
             junto ao Pai com gemidos inexprimíveis (Romanos 8:26).
           </p>
@@ -183,9 +182,9 @@ export default function Licao4({ onVoltar }: LicaoProps) {
         <section className="licao-section">
           <h2>3. O Batismo no Espírito Santo</h2>
           <p>
-            O batismo com o Espírito Santo é uma das experiências mais glorórias na vida de um 
-            cristão. É uma capacitação sobrenatural dada por Deus ao crente objetivando 
-            <strong> poder, graça e ousadia na Palavra</strong>, para o cumprimento do imperativo de pregar o Evangelho (Marcos 16:15; Atos 1:8).
+            O batismo com o Espírito Santo é uma das experiências mais gloriosas na vida de um 
+            cristão. É uma capacitação sobrenatural dada por Deus ao crente, visando conceder 
+            <strong> poder, graça e ousadia na Palavra</strong> para o cumprimento do imperativo de pregar o Evangelho (Marcos 16:15; Atos 1:8).
           </p>
 
           <div className="nota-teologica">
@@ -228,7 +227,7 @@ export default function Licao4({ onVoltar }: LicaoProps) {
             </div>
             <div className="pilar-card">
               <h4>3. Fé</h4>
-              <p>A ponte para o sobrenatural. É necessário crer que ele existe, e que é galardoador dos que o buscam (Hebreus 11:6).</p>
+              <p>A ponte para o sobrenatural. É necessário crer que Ele existe e que é galardoador dos que O buscam (Hebreus 11:6).</p>
             </div>
           </div>
 
@@ -242,7 +241,7 @@ export default function Licao4({ onVoltar }: LicaoProps) {
           </div>
 
           <p>
-            O Espírito Santo é um ser sensível; por isso, não devemos entristecê-lo (Efésios 4:30). É Ele quem nos 
+            O Espírito Santo é um Ser sensível; por isso, não devemos entristecê-Lo (Efésios 4:30). É Ele quem nos 
             conduzirá perfeitamente ante a presença de Cristo no dia da Sua gloriosa vinda (Apocalipse 22:17). 
             <em> Maranata — Ora, vem, Senhor Jesus!</em>
           </p>
@@ -265,7 +264,7 @@ export default function Licao4({ onVoltar }: LicaoProps) {
           </div>
 
           <div className="form-group">
-            <label>2) Qual é a missão prioritária do Espírito Santo atualmente na terra em relação ao mundo?</label>
+            <label>2) Qual é a missão prioritária do Espírito Santo atualmente na Terra em relação ao mundo?</label>
             <input 
               type="text" 
               placeholder="..." 

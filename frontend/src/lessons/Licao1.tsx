@@ -26,14 +26,13 @@ export default function Licao1({ onVoltar }: LicaoProps) {
 
         if (docSnap.exists()) {
           const data = docSnap.data();
-          // ALTERADO: Mudado de 'licao-1' para 'a-biblia'
           if (data.respostasQuestionarios && data.respostasQuestionarios['a-biblia']) {
             const salvas = data.respostasQuestionarios['a-biblia'];
             setRespostas({
               q1: salvas['1) Mencione, pelo menos, três títulos dados à Bíblia:'] || '',
               q2: salvas['2) Quais os idiomas originais em que a Bíblia foi escrita?'] || '',
               q3: salvas['3) O que significa o vocábulo Bíblia?'] || '',
-              q4: salvas['4) Em quantos anos aproximadamente a Bíblia foi formada?'] || '',
+              q4: salvas['4) Em quantos anos, aproximadamente, a Bíblia foi formada?'] || '',
               q5: salvas['5) Quantos escritores humanos participaram da escrita da Bíblia?'] || ''
             });
           }
@@ -64,7 +63,7 @@ export default function Licao1({ onVoltar }: LicaoProps) {
       '1) Mencione, pelo menos, três títulos dados à Bíblia:': respostas.q1,
       '2) Quais os idiomas originais em que a Bíblia foi escrita?': respostas.q2,
       '3) O que significa o vocábulo Bíblia?': respostas.q3,
-      '4) Em quantos anos aproximadamente a Bíblia foi formada?': respostas.q4,
+      '4) Em quantos anos, aproximadamente, a Bíblia foi formada?': respostas.q4,
       '5) Quantos escritores humanos participaram da escrita da Bíblia?': respostas.q5,
     };
 
@@ -72,7 +71,7 @@ export default function Licao1({ onVoltar }: LicaoProps) {
       const docRef = doc(db, 'users_progress', user.uid);
       await setDoc(docRef, {
         respostasQuestionarios: {
-          'a-biblia': payloadRespostas // ALTERADO: Mudado de 'licao-1' para 'a-biblia'
+          'a-biblia': payloadRespostas
         }
       }, { merge: true });
 
@@ -90,7 +89,6 @@ export default function Licao1({ onVoltar }: LicaoProps) {
       {toast && (
         <div className="toast-container">
           <div className={`custom-toast toast-${toast.tipo}`}>
-            {/* Emojis removidos daqui de dentro */}
             <span>{toast.mensagem}</span>
           </div>
         </div>
@@ -116,17 +114,17 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           <p>
             Após o ingresso do pecado na raça humana, retratado no livro de <strong>Gênesis (Capítulo 3)</strong>, 
             o homem perdeu a comunhão plena e face a face que possuía com o Criador. O pecado gerou separação espiritual. 
-            Para resgatar essa ponte e não deixar a humanidade em trevas morais, houve a profunda necessidade de Deus se revelar ao homem de forma específica.
+            Para reconstruir essa ponte e não deixar a humanidade em trevas morais, houve a profunda necessidade de Deus se revelar ao homem de forma específica.
           </p>
           <p>
             Deus, em Sua infinita graça, moveu o coração de pessoas específicas ao longo da história. Sob a supervisão, 
-            aspiração e preservação do <strong>Espírito Santo</strong>, eles deitaram em letras as Palavras eternas de Deus, 
+            inspiração e preservação do <strong>Espírito Santo</strong>, eles registraram em palavras as verdades eternas de Deus, 
             reunindo-as em um único compêndio de revelação divina que hoje conhecemos e reverenciamos como a <strong>Bíblia Sagrada</strong>.
           </p>
 
           <div className="nota-teologica">
             <h3>A Doutrina da Inspiração</h3>
-            <p>O Apóstolo Pedro confirma esse misterioso e cooperação divino-humana:</p>
+            <p>O apóstolo Pedro confirma essa misteriosa cooperação divino-humana:</p>
             <p className="citacao-biblica">
               "Porque a profecia nunca foi produzida por vontade de homem algum, mas os homens santos de Deus falaram inspirados pelo Espírito Santo." 
               <span>— 2 Pedro 1:21</span>
@@ -149,7 +147,7 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           
           <div className="quadro-negro-box">
             <p>
-              "A Bíblia se constitui na única regra de fé e conduta do cristão. Ela contém a mente de Deus, 
+              "A Bíblia se constitui na única regra de fé e prática do cristão. Ela contém a mente de Deus, 
               o estado espiritual do homem, o caminho da salvação, a condenação dos impenitentes e a felicidade dos justos."
             </p>
             <span className="autor-fonte">— Alfalit (Bibliologia)</span>
@@ -220,7 +218,7 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           </div>
 
           <p className="alerta-jesus">
-            Jesus nos advertiu severamente em Mateus 22:29: <em>“Errais por não conhecer as Escrituras e nem o poder de Deus”</em>. 
+            Jesus nos advertiu severamente em Mateus 22:29: <em>“Errais por não conhecer as Escrituras nem o poder de Deus”</em>. 
             Daí nasce a extrema necessidade da meditação diária e constante (Salmos 1:3).
           </p>
         </section>
@@ -231,7 +229,7 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           <ol className="passos-leitura">
             <li><strong>Ore antes de abrir:</strong> Peça direcionamento ao Espírito Santo.</li>
             <li><strong>Observe atentamente:</strong> Atente-se aos fatos, dados, personagens e contexto.</li>
-            <li><strong>Sonde cuidadosamente:</strong> Não faça uma leitura veloz, examine cada termo.</li>
+            <li><strong>Sonde cuidadosamente:</strong> Não faça uma leitura veloz; examine cada termo.</li>
             <li><strong>Descubra o propósito:</strong> Entenda o que o texto quer transmitir originalmente.</li>
             <li><strong>Parafraseie:</strong> Descreva com suas próprias palavras o texto lido para fixação.</li>
             <li><strong>Busque a intenção original:</strong> Qual era o objetivo do autor humano ao escrever aquilo?</li>
@@ -252,7 +250,7 @@ export default function Licao1({ onVoltar }: LicaoProps) {
 
         <section className="licao-section questionario-section">
           <h2>Questionário do Discípulo</h2>
-          <p className="sub-q">Responda abaixo para testar seus conhecimentos obtidos nesta lição:</p>
+          <p className="sub-q">Responda abaixo para testar os conhecimentos obtidos nesta lição:</p>
           
           <div className="form-group">
             <label>1) Mencione, pelo menos, três títulos dados à Bíblia:</label>
@@ -285,7 +283,7 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           </div>
 
           <div className="form-group">
-            <label>4) Em quantos anos aproximadamente a Bíblia foi formada? </label>
+            <label>4) Em quantos anos, aproximadamente, a Bíblia foi formada?</label>
             <input 
               type="text" 
               placeholder="..." 
@@ -295,7 +293,7 @@ export default function Licao1({ onVoltar }: LicaoProps) {
           </div>
 
           <div className="form-group">
-            <label>5) Quantos escritores humanos participaram da escrita da Bíblia? </label>
+            <label>5) Quantos escritores humanos participaram da escrita da Bíblia?</label>
             <input 
               type="text" 
               placeholder="..." 
@@ -329,7 +327,7 @@ export default function Licao1({ onVoltar }: LicaoProps) {
                 <li><strong>R2:</strong> O Antigo Testamento foi escrito em <strong>Hebraico</strong> (com pequenos trechos em Aramaico) e o Novo Testamento em <strong>Grego de base popular (Koiné)</strong>.</li>
                 <li><strong>R3:</strong> Significa "Coleção de pequenos livros".</li>
                 <li><strong>R4:</strong> A Bíblia levou um período aproximado de <strong>1600 anos</strong> para ser totalmente redigida.</li>
-                <li><strong>R5:</strong> Cerca de <strong>40 homens / escritores humanos</strong> de diferentes épocas e profissões, todos guiados pelo Espírito Santo.</li>
+                <li><strong>R5:</strong> Cerca de <strong>40 escritores humanos</strong> de diferentes épocas e profissões, todos guiados pelo Espírito Santo.</li>
               </ul>
             </div>
           )}

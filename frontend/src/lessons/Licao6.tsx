@@ -31,14 +31,14 @@ export default function Licao6({ onVoltar }: LicaoProps) {
             setRespostas({
               q1: salvas['1) Defina, com base no texto, o que é Salvação:'] || '',
               q2: salvas['2) Quais são os dois aspectos fundamentais da salvação e o que caracteriza cada um?'] || '',
-              q3: salvas['3) Quais são os efeitos principais que a Regeneração DO indivíduo produz na vida do indivíduo?'] || '',
+              q3: salvas['3) Quais são os efeitos principais que a regeneração produz na vida do indivíduo?'] || '',
               q4: salvas['4) O que significa ser santo do ponto de vista bíblico e doutrinário?'] || '',
               q5: salvas['5) Quais são as três áreas da vida humana que precisam passar pelo processo de santificação?'] || ''
             });
           }
         }
       } catch (error) {
-        console.error(error);
+        console.error('Erro ao carregar respostas:', error);
       }
     };
 
@@ -62,7 +62,7 @@ export default function Licao6({ onVoltar }: LicaoProps) {
     const payloadRespostas = {
       '1) Defina, com base no texto, o que é Salvação:': respostas.q1,
       '2) Quais são os dois aspectos fundamentais da salvação e o que caracteriza cada um?': respostas.q2,
-      '3) Quais são os efeitos principais que a Regeneração DO indivíduo produz na vida do indivíduo?': respostas.q3,
+      '3) Quais são os efeitos principais que a regeneração produz na vida do indivíduo?': respostas.q3,
       '4) O que significa ser santo do ponto de vista bíblico e doutrinário?': respostas.q4,
       '5) Quais são as três áreas da vida humana que precisam passar pelo processo de santificação?': respostas.q5,
     };
@@ -77,7 +77,7 @@ export default function Licao6({ onVoltar }: LicaoProps) {
 
       exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
     } catch (error) {
-      console.error(error);
+      console.error('Erro ao salvar respostas:', error);
       exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
     } finally {
       setSalvando(false);
@@ -140,7 +140,7 @@ export default function Licao6({ onVoltar }: LicaoProps) {
             de sua culpa e o declara justo (Atos 13:39; Isaías 43:25).
           </p>
           <ul className="lista-cozy">
-            <li><strong>Fonte:</strong> A Graça — um favor totalmente imerecido que provém do trono de Deus (Hebreus 4:16) e se manifesta cabalmente in Cristo (João 1:14).</li>
+            <li><strong>Fonte:</strong> A Graça — um favor totalmente imerecido que provém do trono de Deus (Hebreus 4:16) e se manifesta cabalmente em Cristo (João 1:14).</li>
             <li><strong>Fundamentos:</strong> Manifesta-se pela Santidade de Deus (Miqueias 6:8), por Sua Graça soberana (Efésios 2:7-8) e pela fé depositada em Cristo Jesus (Romanos 3:22; 5:1).</li>
             <li><strong>Instrumento Divino:</strong> O sangue de Jesus Cristo (Romanos 3:25; Hebreus 9:23-28).</li>
             <li><strong>Efeitos Práticos:</strong> Paz com Deus, com o próximo e consigo mesmo (Romanos 5:1); Frutos em abundância (Filipenses 1:11; João 15:5); e Prosperidade, entendida como a plena satisfação obtida em Deus (Provérbios 4:18).</li>
@@ -171,8 +171,8 @@ export default function Licao6({ onVoltar }: LicaoProps) {
             Assim como no direito civil, a adoção espiritual é o ato jurídico divino no qual Deus assume permanentemente como filho aquele que antes não pertencia à Sua família biológica (Romanos 8:14-17).
           </p>
           <ul className="lista-cozy">
-            <li><strong>Privilégios e Bênçãos:</strong> Estar para sempre com o Senhor, receber um novo nome, integrar uma nova família, ter intimidade total com o Pai e co-herdar todas as coisas com Cristo (1 Tessalonicenses 4:17; Apocalipse 2:17; Efésios 2:19; Romanos 8:17).</li>
-            <li><strong>Reflexos no Adotado:</strong> Filhos legítimos andam em estrita obediência, buscam a semelhança com o Pai e promovem a Sua glória na terra (1 Pedro 1:14; Mateus 5:16, 44-48).</li>
+            <li><strong>Privilégios e Bênçãos:</strong> Estar para sempre com o Senhor, receber um novo nome, integrar uma nova família, ter intimidade total com o Pai e ser coerdeiro de todas as coisas com Cristo (1 Tessalonicenses 4:17; Apocalipse 2:17; Efésios 2:19; Romanos 8:17).</li>
+            <li><strong>Reflexos no Adotado:</strong> Filhos legítimos andam em estrita obediência, buscam a semelhança com o Pai e promovem a Sua glória na Terra (1 Pedro 1:14; Mateus 5:16, 44-48).</li>
           </ul>
 
           <h3>Santificação</h3>
@@ -219,7 +219,7 @@ export default function Licao6({ onVoltar }: LicaoProps) {
             É o ponto de partida da caminhada cristã. Define-se como um ato pessoal e consciente de contrição, onde o ser humano decide dar uma "meia-volta" (mudança de direção) em relação aos atos pecaminosos (João 16:8). 
           </p>
           <blockquote>
-            <strong>Atenção:</strong> Arrependimento é diferente de remorso. O remorso tenta fazer justiça pelas próprias mãos (como no caso de Judas em Mateus 27:5), enquanto o arrependimento gera verdadeira confissão, lágrimas, oração, fé e real conversão (Atos 13:19; Salmos 51).
+            <strong>Atenção:</strong> Arrependimento é diferente de remorso. O remorso tenta fazer justiça pelas próprias mãos (como no caso de Judas em Mateus 27:5), enquanto o arrependimento gera verdadeira confissão, lágrimas, oração, fé e real conversão (Atos 3:19; Salmos 51).
           </blockquote>
 
           <h3>Fé</h3>
@@ -277,7 +277,7 @@ export default function Licao6({ onVoltar }: LicaoProps) {
           </div>
 
           <div className="form-group">
-            <label>3) Quais são os efeitos principais que a Regeneração produz na vida do indivíduo?</label>
+            <label>3) Quais são os efeitos principais que a regeneração produz na vida do indivíduo?</label>
             <input 
               type="text" 
               placeholder="..." 

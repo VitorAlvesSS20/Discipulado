@@ -30,10 +30,10 @@ export default function Licao16({ onVoltar }: LicaoProps) {
             const salvas = data.respostasQuestionarios['discipulo-gerando-discipulo'];
             setRespostas({
               q1: salvas['1) De acordo com o texto, qual é a missão integral da Igreja na terra e a quem ela se direciona primariamente?'] || '',
-              q2: salvas['2) Cite pelo menos três ações fundamentais que o Espírito Santo realiza no livro de Atos para capacitar os evangelizadores?'] || '',
+              q2: salvas['2) Cite pelo menos três ações fundamentais que o Espírito Santo realiza no livro de Atos para capacitar os evangelizadores:'] || '',
               q3: salvas['3) Qual é a diferença entre os conceitos de evangelização "Verbal" e "Pessoal", e por que eles precisam andar juntos?'] || '',
               q4: salvas['4) Baseando-se no encontro de Jesus com a mulher samaritana (João 4), cite dois passos práticos que servem de modelo para o evangelismo:'] || '',
-              q5: salvas['5) Qual deve ser o comportamento prático e ético do discípulo no momento de abordagem uma pessoa para evangelizar?'] || ''
+              q5: salvas['5) Qual deve ser o comportamento prático e ético do discípulo no momento de abordar uma pessoa para evangelizar?'] || ''
             });
           }
         }
@@ -61,10 +61,10 @@ export default function Licao16({ onVoltar }: LicaoProps) {
 
     const payloadRespostas = {
       '1) De acordo com o texto, qual é a missão integral da Igreja na terra e a quem ela se direciona primariamente?': respostas.q1,
-      '2) Cite pelo menos três ações fundamentais que o Espírito Santo realiza no livro de Atos para capacitar os evangelizadores?': respostas.q2,
+      '2) Cite pelo menos três ações fundamentais que o Espírito Santo realiza no livro de Atos para capacitar os evangelizadores:': respostas.q2,
       '3) Qual é a diferença entre os conceitos de evangelização "Verbal" e "Pessoal", e por que eles precisam andar juntos?': respostas.q3,
       '4) Baseando-se no encontro de Jesus com a mulher samaritana (João 4), cite dois passos práticos que servem de modelo para o evangelismo:': respostas.q4,
-      '5) Qual deve ser o comportamento prático e ético do discípulo no momento de abordagem uma pessoa para evangelizar?': respostas.q5,
+      '5) Qual deve ser o comportamento prático e ético do discípulo no momento de abordar uma pessoa para evangelizar?': respostas.q5,
     };
 
     try {
@@ -130,7 +130,7 @@ export default function Licao16({ onVoltar }: LicaoProps) {
           <ul className="lista-cozy">
             <li><strong>Dá poder e autoridade</strong> para testemunhar (Atos 1:8).</li>
             <li><strong>Encoraja</strong> os crentes diante das ameaças (Atos 4:31).</li>
-            <li><strong>Cria oportunidades</strong> divinas e estratégicas (Atos 8:20; 10:9).</li>
+            <li><strong>Cria oportunidades</strong> divinas e estratégicas (Atos 8:26-29; 10:9).</li>
             <li><strong>Quebra as barreiras</strong> culturais e religiosas (Atos 10).</li>
             <li><strong>Direciona geograficamente</strong> a quem se dirigir (Atos 16:6-10).</li>
             <li><strong>Prepara e abre os corações</strong> para acolher a mensagem (Atos 16:14).</li>
