@@ -75,7 +75,6 @@ export default function Licao17({ onVoltar }: LicaoProps) {
         }
       }, { merge: true });
 
-      exibirToast('Respostas salvas com sucesso. Você pode visualizá-las no seu Perfil.', 'success');
     } catch (error) {
       console.error('Erro ao salvar respostas:', error);
       exibirToast('Erro ao salvar as respostas. Tente novamente.', 'error');
