@@ -115,20 +115,24 @@
   transform: translateY(-1px);
 }
 
+/* --- BOTÃO LOGOUT (COR CLARA) --- */
 .menu-btn-logout {
-  background: transparent;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  padding: 6px 12px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  color: var(--primary);
+  padding: 6px 14px;
   cursor: pointer;
   border-radius: 4px;
   font-size: 0.8rem;
-  font-weight: bold;
+  font-weight: 800;
+  box-shadow: 2px 2px 0px var(--border-color);
   transition: all 0.2s;
 }
 
 .menu-btn-logout:hover {
-  background: rgba(212, 175, 55, 0.1);
+  background: #FFF5F5;
+  color: var(--primary-light);
+  transform: translateY(-1px);
 }
 
 .brand-logo {
@@ -678,10 +682,6 @@
     width: 100%;
     text-align: center;
     box-sizing: border-box;
-  }
-
-  .menu-btn-logout {
-    background: rgba(255, 255, 255, 0.1);
   }
 
   .main-content {
