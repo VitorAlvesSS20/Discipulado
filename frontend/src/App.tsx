@@ -167,7 +167,6 @@ export default function App() {
           setLicoesConcluidas(updatedProgress);
           try {
             await setDoc(doc(db, 'users_progress', user.uid), { [currentLessonSlug]: true }, { merge: true });
-            toast.success('Progresso salvo!');
           } catch (error) {
             console.error('Erro ao salvar progresso:', error);
             toast.error('Erro ao salvar o progresso da lição.');
@@ -380,7 +379,6 @@ export default function App() {
             <div className="footer-info">
               <h4 className="footer-title">Igreja Missão Fogo e Glória</h4>
               <p className="footer-address">
-                 <strong>Endereço:</strong> Rua Treze de Maio, 2444 — Canindé - CE
               </p>
               <p className="footer-social">
                  <strong>Instagram:</strong>{' '}
